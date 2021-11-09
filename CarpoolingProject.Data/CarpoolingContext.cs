@@ -36,10 +36,6 @@ namespace CarpoolingProject.Data
                 .WithMany(ur => ur.Users)
                 .HasForeignKey(ur => ur.RoleId)
                 .OnDelete(DeleteBehavior.NoAction);
-
-
         }
-
-
     }
 }
