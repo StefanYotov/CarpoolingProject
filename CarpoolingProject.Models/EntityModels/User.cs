@@ -11,7 +11,7 @@ namespace CarpoolingProject.Models.EntityModels
     public class User
     {
         [Key]
-        public int Id { get; set; }
+        public int UserId { get; set; }
         [Required]
         [MinLength(2, ErrorMessage = "Username must be {0}"), MaxLength(20)]
         public string UserName { get; set; }
@@ -28,8 +28,8 @@ namespace CarpoolingProject.Models.EntityModels
         public string Email { get; set; }
         [Required]
         public int PhoneNumber { get; set; }
-        [ForeignKey("Role")]
-        public int RoleId { get; set; }
-        public Role Role { get; set; }
+        //[ForeignKey("Role")]
+       
+        public ICollection<UserRole> Roles { get; set; } = new List<UserRole>();
     }
 }

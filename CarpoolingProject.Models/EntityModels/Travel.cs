@@ -10,7 +10,7 @@ namespace CarpoolingProject.Data
     public class Travel
     {
         [Key]
-        public int Id { get; set; }
+        public int TravelId { get; set; }
 
         [Required]
         public string StartPoint { get; set; }
