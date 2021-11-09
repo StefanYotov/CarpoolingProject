@@ -20,6 +20,5 @@ namespace CarpoolingProject.Data
         public DateTime DepartureTime { get; set; }
         [Required]
         public int FreeSpots { get; set; }
-        
     }
 }
