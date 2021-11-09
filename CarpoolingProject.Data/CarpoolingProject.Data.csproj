@@ -12,4 +12,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CarpoolingProject.Models\CarpoolingProject.Models.csproj" />
+  </ItemGroup>
+
 </Project>
