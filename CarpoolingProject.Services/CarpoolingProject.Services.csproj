@@ -5,13 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CarpoolingProject.Data\CarpoolingProject.Data.csproj" />
     <ProjectReference Include="..\CarpoolingProject.Models\CarpoolingProject.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
     <Folder Include="Utilities\" />
-    <Folder Include="ServiceImplementation\" />
   </ItemGroup>
 
   <ItemGroup>
