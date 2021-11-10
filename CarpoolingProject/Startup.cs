@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using CarpoolingProject.Services.ServiceImplementation;
 
 namespace CarpoolingProject
 {
@@ -20,11 +21,17 @@ namespace CarpoolingProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
             services.AddControllersWithViews();
             services.AddDbContext<CarpoolingContext>(options =>
             {
                 options.UseSqlServer("Server=.\\SQLEXPRESS;Database=Carpooling;Trusted_Connection=True;");
             });
+            services.AddScoped<ITravelService, TravelService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,7 +45,13 @@ namespace CarpoolingProject
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Carpooling V1")
+            });
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
 
@@ -46,9 +59,7 @@ namespace CarpoolingProject
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }

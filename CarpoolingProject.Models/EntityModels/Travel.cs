@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarpoolingProject.Models.EntityModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,6 +12,9 @@ namespace CarpoolingProject.Data
     {
         [Key]
         public int TravelId { get; set; }
+        [Required]
+        public int UserId { get; set; }
+        public User User { get; set; }
 
         [Required]
         public string StartPoint { get; set; }
@@ -20,5 +24,6 @@ namespace CarpoolingProject.Data
         public DateTime DepartureTime { get; set; }
         [Required]
         public int FreeSpots { get; set; }
+        public ICollection<User> Users { get; set; }
     }
 }
