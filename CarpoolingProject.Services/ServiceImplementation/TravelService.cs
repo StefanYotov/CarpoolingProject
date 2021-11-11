@@ -46,6 +46,16 @@ namespace CarpoolingProject.Services.ServiceImplementation
             context.Travels.Remove(travelToDelete);
             this.context.SaveChanges();
         }
+        public Travel UpdateTravel(int id, Travel travel)
+        {
+            var travelToUpdate = GetTravel(id);
+            ValidateDate(travel);
+            travelToUpdate.StartPoint = travel.StartPoint;
+            travelToUpdate.EndPoint = travel.EndPoint;
+            travelToUpdate.DepartureTime = travel.DepartureTime;
+            travelToUpdate.FreeSpots = travel.FreeSpots;
+            return travelToUpdate;
+        }
         private void ValidateDate(Travel travel)
         {
             if(this.GetTravel(travel.UserId) == null)
