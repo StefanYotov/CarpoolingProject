@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using CarpoolingProject.Services.ServiceImplementation;
+using CarpoolingProject.Services.Interfaces;
+
 
 namespace CarpoolingProject
 {
@@ -26,12 +28,15 @@ namespace CarpoolingProject
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
-            services.AddControllersWithViews();
+           
             services.AddDbContext<CarpoolingContext>(options =>
             {
                 options.UseSqlServer("Server=.\\SQLEXPRESS;Database=Carpooling;Trusted_Connection=True;");
             });
+            services.AddControllers();
+            services.AddControllersWithViews();
             services.AddScoped<ITravelService, TravelService>();
+            //services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,11 +50,11 @@ namespace CarpoolingProject
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Carpooling V1")
-            });
+            //app.UseSwagger();
+            //app.UseSwaggerUI(c =>
+            //{
+            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Carpooling V1");
+            //});
             app.UseStaticFiles();
             app.UseSession();
 

@@ -4,11 +4,10 @@ using CarpoolingProject.Models.ResponseModels;
 using CarpoolingProject.Services.Dtos;
 using CarpoolingProject.Services.Exceptions;
 using CarpoolingProject.Services.Utilities;
+using CarpoolingProject.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CarpoolingProject.Services.ServiceImplementation
@@ -36,12 +35,34 @@ namespace CarpoolingProject.Services.ServiceImplementation
             var travelsCount = this.context.Travels.Count();
             return travelsCount;
         }
-        public async Task<InfoResponseModel> CreateTravelAsync(Travel travel)
+        public async Task<InfoResponseModel> CreateTravelAsync(CreateTravelRequestModel requestModel)
         {
             var responseModel = new InfoResponseModel();
+            if (requestModel.UserId < 1 ||
+                requestModel.StartPoint.Equals(null) ||
+                requestModel.EndPoint.Equals(null) ||
+                requestModel.FreeSpots < 1
+                )
+            {
+                responseModel.IsSuccess = false;
+                responseModel.Message = Constants.TRAVEL_INVALID_PARAMS;
+                return responseModel;
+            }
+            var travel = new Travel()
+            {
+                UserId = requestModel.UserId,
+                StartPoint = requestModel.StartPoint,
+                EndPoint = requestModel.EndPoint,
+                DepartureTime = requestModel.DepartureTime,
+                FreeSpots = requestModel.FreeSpots
+
+            };
+            context.Travels.Add(travel);
+            await context.SaveChangesAsync();
+
+            responseModel.IsSuccess = true;
             responseModel.Message = Constants.TRAVEL_CREATE_SUCCESS;
-            await context.Travels.AddAsync(travel);
-            this.context.SaveChanges();
+
             return responseModel;
             
         }

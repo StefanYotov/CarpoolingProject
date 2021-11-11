@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarpoolingProject.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,7 +11,7 @@ namespace CarpoolingProject.Models.EntityModels
 {
     public class User
     {
-        [Key]
+        
         public int UserId { get; set; }
         [Required]
         [MinLength(2, ErrorMessage = "Username must be {0}"), MaxLength(20)]
@@ -28,8 +29,6 @@ namespace CarpoolingProject.Models.EntityModels
         public string Email { get; set; }
         [Required]
         public int PhoneNumber { get; set; }
-        //[ForeignKey("Role")]
-       
         public ICollection<UserRole> Roles { get; set; } = new List<UserRole>();
     }
 }

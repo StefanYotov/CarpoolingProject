@@ -53,6 +53,7 @@ namespace CarpoolingProject.Data
                 new Travel
                 {
                     TravelId=1,
+                    UserId=1,
                     StartPoint="velcho atanasov 55",
                     EndPoint ="Selo Sofia",
                     DepartureTime= new DateTime(2021, 11, 15, 22, 50,00),
@@ -61,6 +62,7 @@ namespace CarpoolingProject.Data
                 new Travel
                 {
                     TravelId=2,
+                    UserId=2,
                     StartPoint="velcho atanasov 55",
                     EndPoint ="Selo Sofia",
                     DepartureTime= new DateTime(2021, 11, 15, 22, 50,00),
@@ -69,6 +71,7 @@ namespace CarpoolingProject.Data
                 new Travel
                 {
                     TravelId=3,
+                    UserId=3,
                     StartPoint="velcho atanasov 55",
                     EndPoint ="Selo Sofia",
                     DepartureTime= new DateTime(2021, 11, 15, 22, 50,00),
