@@ -23,7 +23,14 @@ namespace CarpoolingProject.Web.Controllers
         public async Task<IActionResult> Create([FromBody] CreateCountryRequestModel requestModel)
         {
             var response = await countryService.CreateCountryAsync(requestModel);
-            return Json(response);
+            return Ok(response);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromQuery] DeleteCountryRequestModel requestModel)
+        {
+            var response = await countryService.DeleteCountryAsync(requestModel);
+            return Ok(response);
         }
     }
 }
