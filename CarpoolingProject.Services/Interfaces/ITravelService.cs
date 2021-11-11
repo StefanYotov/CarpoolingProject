@@ -12,5 +12,6 @@ namespace CarpoolingProject.Services.ServiceImplementation
         int TravelCount();
         Task<Travel> CreateTravel(Travel travel);
         void DeleteTravel(int id);
+        Travel UpdateTravel(int id, Travel travel);
     }
 }
