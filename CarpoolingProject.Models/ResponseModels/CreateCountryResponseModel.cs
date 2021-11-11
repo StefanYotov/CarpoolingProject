@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarpoolingProject.Models.ResponseModels
 {
-    public class CountryResponseModel
+    public class CreateCountryResponseModel
     {
         public List<string> Countries { get; set; }
     }

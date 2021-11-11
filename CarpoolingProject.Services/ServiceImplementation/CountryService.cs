@@ -3,10 +3,7 @@ using CarpoolingProject.Models.EntityModels;
 using CarpoolingProject.Models.RequestModels;
 using CarpoolingProject.Models.ResponseModels;
 using CarpoolingProject.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace CarpoolingProject.Services.ServiceImplementation
@@ -20,7 +17,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
             this.db = db;
         }
 
-      public async Task<CreateCountryResponseModel> CreateAsync(CreateCountryRequestModel requestModel)
+        public async Task<CreateCountryResponseModel> CreateCountryAsync(CreateCountryRequestModel requestModel)
         {
             var responseModel = new CreateCountryResponseModel();
 
@@ -31,6 +28,28 @@ namespace CarpoolingProject.Services.ServiceImplementation
             };
             this.db.Countries.Add(country);
             await this.db.SaveChangesAsync();
+            return responseModel;
+        }
+
+        public async Task<DeleteCountryResponseModel> DeleteWarehouseAsync(DeleteCountryRequestModel requestModel)
+        {
+            var responseModel = new DeleteCountryResponseModel();
+            var country = await this.db.Countries.FirstOrDefaultAsync(c => c.Id == requestModel.Id);
+
+            if (country == null)
+            {
+                responseModel.Message = "Country cannot be null";
+                responseModel.IsSuccess = false;
+            }
+
+            else
+            {
+                responseModel.Message = "Successfully deleted";
+                responseModel.IsSuccess = true;
+                this.db.Countries.Remove(country);
+                await this.db.SaveChangesAsync();
+
+            }
             return responseModel;
         }
     }

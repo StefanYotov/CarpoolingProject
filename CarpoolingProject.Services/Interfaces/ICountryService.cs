@@ -10,6 +10,6 @@ namespace CarpoolingProject.Services.Interfaces
 {
     public interface ICountryService
     {
-        Task<CreateCountryResponseModel> CreateAsync(CreateCountryRequestModel requestModel);
+        Task<CreateCountryResponseModel> CreateCountryAsync(CreateCountryRequestModel requestModel);
     }
 }
