@@ -9,5 +9,6 @@ namespace CarpoolingProject.Data
         DbSet<Travel> Travels { get; set; }
         DbSet<Role> Roles { get; set; }
         DbSet<UserRole> UserRoles { get; set; }
+        DbSet<Address> Addresses { get; set; }
     }
 }
