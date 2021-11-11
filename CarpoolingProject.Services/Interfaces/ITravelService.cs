@@ -14,6 +14,7 @@ namespace CarpoolingProject.Services.Interfaces
         int TravelCount();
         Task<InfoResponseModel> CreateTravelAsync(CreateTravelRequestModel requestModel);
         Task<InfoResponseModel> DeleteTravelAsync(DeleteTravelRequestModel requestModel);
+        Task<InfoResponseModel> UpdateTravelAsync(UpdateTravelRequestModel requestModel);
         //Travel UpdateTravel(int id, Travel travel);
     }
 }

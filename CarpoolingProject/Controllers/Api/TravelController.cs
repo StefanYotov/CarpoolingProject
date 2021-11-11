@@ -26,11 +26,27 @@ namespace CarpoolingProject.Web.Controllers.Api
             var travels = await travelService.GetAllTravelsAsync();
             return Ok(travels);
         }
-        [HttpPut("")]
+        [HttpPost("")]
         public async Task<IActionResult> Create([FromBody] CreateTravelRequestModel requestModel)
         {
             var responce = await travelService.CreateTravelAsync(requestModel);
             return this.Ok(responce);
+        }
+        [HttpDelete("")]
+        public async Task<IActionResult> Delete(DeleteTravelRequestModel requestModel)
+        {
+            var responce = await travelService.DeleteTravelAsync(requestModel);
+            if (responce.IsSuccess)
+            {
+                return this.Ok(responce.Message);
+            }
+            return BadRequest(responce.Message);
+        }
+        [HttpPut("")]
+        public async Task<IActionResult> Update(UpdateTravelRequestModel requestModel)
+        {
+            var response = await travelService.UpdateTravelAsync(requestModel);
+            return this.Ok(response);
         }
     }
 }

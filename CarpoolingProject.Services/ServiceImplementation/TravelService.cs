@@ -12,14 +12,14 @@ using System.Threading.Tasks;
 
 namespace CarpoolingProject.Services.ServiceImplementation
 {
-    public class TravelService:ITravelService
+    public class TravelService : ITravelService
     {
         private readonly CarpoolingContext context;
         public TravelService(CarpoolingContext context)
         {
-            this.context=context;
+            this.context = context;
         }
-        
+
         public async Task<Travel> GetTravel(int id)
         {
             var travel = await context.Travels.FirstOrDefaultAsync(x => x.TravelId == id);
@@ -39,8 +39,8 @@ namespace CarpoolingProject.Services.ServiceImplementation
         {
             var responseModel = new InfoResponseModel();
             if (requestModel.UserId < 1 ||
-                requestModel.StartPoint.Equals(null) ||
-                requestModel.EndPoint.Equals(null) ||
+                requestModel.StartPoint == null ||
+                requestModel.EndPoint == null ||
                 requestModel.FreeSpots < 1
                 )
             {
@@ -64,15 +64,15 @@ namespace CarpoolingProject.Services.ServiceImplementation
             responseModel.Message = Constants.TRAVEL_CREATE_SUCCESS;
 
             return responseModel;
-            
+
         }
         public async Task<InfoResponseModel> DeleteTravelAsync(DeleteTravelRequestModel requestModel)
         {
             var responseModel = new InfoResponseModel();
-            var travelToDelete = await context.Travels.FirstOrDefaultAsync(x=>x.TravelId==requestModel.Id);
-            if(travelToDelete == null)
+            var travelToDelete = await context.Travels.FirstOrDefaultAsync(x => x.TravelId == requestModel.Id);
+            if (travelToDelete == null)
             {
-                responseModel.Message =Constants.TRAVEL_NOT_FOUND;
+                responseModel.Message = Constants.TRAVEL_NOT_FOUND;
                 responseModel.IsSuccess = false;
             }
             else
@@ -83,7 +83,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
                 this.context.SaveChanges();
             }
             return responseModel;
-            
+
         }
         //public Travel UpdateTravel(int id, Travel travel)
         //{
@@ -97,10 +97,67 @@ namespace CarpoolingProject.Services.ServiceImplementation
         //}
         private void ValidateDate(Travel travel)
         {
-            if(this.GetTravel(travel.UserId) == null)
+            if (this.GetTravel(travel.UserId) == null)
             {
                 throw new EntityNotFoundException($"There is no travel with id {travel.UserId} ");
             }
         }
+
+        public async Task<InfoResponseModel> UpdateTravelAsync(UpdateTravelRequestModel requestModel)
+        {
+            var response = new InfoResponseModel();
+            if (requestModel.UserId < 1 ||
+                requestModel.FreeSpots < 1 ||
+                requestModel.EndPoint == null ||
+                requestModel.StartPoint == null
+                )
+            {
+                response.IsSuccess = false;
+                response.Message = Constants.TRAVEL_INVALID_PARAMS;
+                return response;
+            }
+            var travel = await context.Travels.FirstOrDefaultAsync(x => x.TravelId == requestModel.Id);
+            if (travel != null)
+            {
+                if (requestModel.UserId != travel.UserId)
+                {
+                    travel.UserId = requestModel.Id;
+                }
+                else if (requestModel.FreeSpots != travel.FreeSpots)
+                {
+                    travel.FreeSpots = requestModel.FreeSpots;
+                }
+                else if (requestModel.EndPoint != travel.EndPoint)
+                {
+                    travel.EndPoint = requestModel.EndPoint;
+                }
+                else if (requestModel.StartPoint != travel.StartPoint)
+                {
+                    travel.StartPoint = requestModel.StartPoint;
+                }
+                else if (requestModel.DepartureTime != travel.DepartureTime)
+                {
+                    travel.DepartureTime = requestModel.DepartureTime;
+                }
+                //else if (requestModel.Id != travel.TravelId)
+                //{
+                //    response.Message = Constants.TRAVEL_UNATHORIZED;
+                //    response.IsSuccess = false;
+                //    return response;
+                //}
+                await context.SaveChangesAsync();
+                response.Message = Constants.TRAVEL_CREATE_SUCCESS + $"{travel.TravelId}";
+                response.IsSuccess = true;
+            }
+            else
+            {
+                response.IsSuccess = false;
+                response.Message = Constants.TRAVEL_UPDATE_ERROR + $"{travel.TravelId} id";
+            }
+            return response;
+        }
+
+
+
     }
 }
