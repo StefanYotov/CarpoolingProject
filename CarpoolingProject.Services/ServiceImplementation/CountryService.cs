@@ -3,6 +3,7 @@ using CarpoolingProject.Models.EntityModels;
 using CarpoolingProject.Models.RequestModels;
 using CarpoolingProject.Models.ResponseModels;
 using CarpoolingProject.Services.Interfaces;
+using CarpoolingProject.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
@@ -38,13 +39,13 @@ namespace CarpoolingProject.Services.ServiceImplementation
 
             if (country == null)
             {
-                responseModel.Message = "Country cannot be null";
+                responseModel.Message =Constants.COUNTRY_NULL_ERROR;
                 responseModel.IsSuccess = false;
             }
 
             else
             {
-                responseModel.Message = "Successfully deleted";
+                responseModel.Message = Constants.COUNTRY_DELETE_SUCCESSFULL;
                 responseModel.IsSuccess = true;
                 this.db.Countries.Remove(country);
                 await this.db.SaveChangesAsync();

@@ -3,6 +3,7 @@ using CarpoolingProject.Models.RequestModels;
 using CarpoolingProject.Models.ResponseModels;
 using CarpoolingProject.Services.Dtos;
 using CarpoolingProject.Services.Exceptions;
+using CarpoolingProject.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
         public async Task<InfoResponseModel> CreateTravelAsync(Travel travel)
         {
             var responseModel = new InfoResponseModel();
-            responseModel.Message = "Travel created successfully";
+            responseModel.Message = Constants.TRAVEL_CREATE_SUCCESS;
             await context.Travels.AddAsync(travel);
             this.context.SaveChanges();
             return responseModel;
@@ -50,12 +51,12 @@ namespace CarpoolingProject.Services.ServiceImplementation
             var travelToDelete = await context.Travels.FirstOrDefaultAsync(x=>x.TravelId==requestModel.Id);
             if(travelToDelete == null)
             {
-                responseModel.Message = "Travel was not found";
+                responseModel.Message =Constants.TRAVEL_NOT_FOUND;
                 responseModel.IsSuccess = false;
             }
             else
             {
-                responseModel.Message = $"Travel with {requestModel.Id} was successfully deleted.";
+                responseModel.Message = Constants.TRAVEL_DELETE_SUCCESS;
                 responseModel.IsSuccess = true;
                 this.context.Travels.Remove(travelToDelete);
                 this.context.SaveChanges();
@@ -77,7 +78,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
         {
             if(this.GetTravel(travel.UserId) == null)
             {
-                throw new EntityNotFoundException($"There is no user with id {travel.UserId} ");
+                throw new EntityNotFoundException($"There is no travel with id {travel.UserId} ");
             }
         }
     }
