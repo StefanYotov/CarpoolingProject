@@ -11,5 +11,6 @@ namespace CarpoolingProject.Services.Interfaces
     public interface ICountryService
     {
         Task<CreateCountryResponseModel> CreateCountryAsync(CreateCountryRequestModel requestModel);
+        Task<DeleteCountryResponseModel> DeleteCountryAsync(DeleteCountryRequestModel requestModel);
     }
 }
