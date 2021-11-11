@@ -8,5 +8,6 @@ namespace CarpoolingProject.Models.RequestModels
 {
     public class DeleteCountryRequestModel
     {
+        public int Id { get; set; }
     }
 }
