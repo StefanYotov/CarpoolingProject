@@ -1,6 +1,7 @@
 ﻿using CarpoolingProject.Data;
 using CarpoolingProject.Models.RequestModels;
 using CarpoolingProject.Models.ResponseModels;
+using CarpoolingProject.Services.Dtos;
 using CarpoolingProject.Services.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
