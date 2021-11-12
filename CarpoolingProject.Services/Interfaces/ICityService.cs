@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarpoolingProject.Models.RequestModels
+namespace CarpoolingProject.Services.Interfaces
 {
-    public class CreateCountryRequestModel
+    public interface ICityService
     {
-        public string Name { get; set; }
     }
 }

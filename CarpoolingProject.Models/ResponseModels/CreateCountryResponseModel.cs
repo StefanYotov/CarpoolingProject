@@ -8,6 +8,7 @@ namespace CarpoolingProject.Models.ResponseModels
 {
     public class CreateCountryResponseModel
     {
-        public List<string> Countries { get; set; }
+        public bool IsSuccess { get; set; }
+        public string Message { get; set; }
     }
 }

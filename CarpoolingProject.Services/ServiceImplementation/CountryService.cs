@@ -11,11 +11,11 @@ namespace CarpoolingProject.Services.ServiceImplementation
 {
     public class CountryService : ICountryService
     {
-        private readonly CarpoolingContext db;
+        private readonly CarpoolingContext context;
 
-        public CountryService(CarpoolingContext db)
+        public CountryService(CarpoolingContext context)
         {
-            this.db = db;
+            this.context = context;
         }
 
         public async Task<CreateCountryResponseModel> CreateCountryAsync(CreateCountryRequestModel requestModel)
@@ -24,22 +24,23 @@ namespace CarpoolingProject.Services.ServiceImplementation
 
             var country = new Country()
             {
-                Id = requestModel.Id,
                 Name = requestModel.Name
             };
-            this.db.Countries.Add(country);
-            await this.db.SaveChangesAsync();
+            responseModel.IsSuccess = true;
+            responseModel.Message = "Success";
+            this.context.Countries.Add(country);
+            await this.context.SaveChangesAsync();
             return responseModel;
         }
 
         public async Task<DeleteCountryResponseModel> DeleteCountryAsync(DeleteCountryRequestModel requestModel)
         {
             var responseModel = new DeleteCountryResponseModel();
-            var country = await this.db.Countries.FirstOrDefaultAsync(c => c.Id == requestModel.Id);
+            var country = await this.context.Countries.FirstOrDefaultAsync(c => c.Id == requestModel.Id);
 
             if (country == null)
             {
-                responseModel.Message =Constants.COUNTRY_NULL_ERROR;
+                responseModel.Message = Constants.COUNTRY_NULL_ERROR;
                 responseModel.IsSuccess = false;
             }
 
@@ -47,8 +48,8 @@ namespace CarpoolingProject.Services.ServiceImplementation
             {
                 responseModel.Message = Constants.COUNTRY_DELETE_SUCCESSFULL;
                 responseModel.IsSuccess = true;
-                this.db.Countries.Remove(country);
-                await this.db.SaveChangesAsync();
+                this.context.Countries.Remove(country);
+                await this.context.SaveChangesAsync();
 
             }
             return responseModel;

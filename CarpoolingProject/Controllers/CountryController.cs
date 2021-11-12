@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CarpoolingProject.Web.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CountryController : Controller
     {
@@ -19,7 +19,7 @@ namespace CarpoolingProject.Web.Controllers
             this.countryService = service;
         }
 
-        [HttpGet]
+        [HttpPost("")]
         public async Task<IActionResult> Create([FromBody] CreateCountryRequestModel requestModel)
         {
             var response = await countryService.CreateCountryAsync(requestModel);
