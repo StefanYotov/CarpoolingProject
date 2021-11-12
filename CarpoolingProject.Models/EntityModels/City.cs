@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CarpoolingProject.Models.EntityModels
 {
@@ -11,6 +12,7 @@ namespace CarpoolingProject.Models.EntityModels
         [Required]
         public int CountryId { get; set; }
         public Country Country { get; set; }
+        public virtual ICollection<Address> Addresses { get; set; }
 
     }
 }

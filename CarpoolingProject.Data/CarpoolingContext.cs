@@ -25,6 +25,7 @@ namespace CarpoolingProject.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Seed();
+
             modelBuilder.Entity<UserRole>()
                 .HasKey(ur => new { ur.UserId, ur.RoleId });
 
@@ -38,6 +39,18 @@ namespace CarpoolingProject.Data
                 .HasOne(ur => ur.Role)
                 .WithMany(ur => ur.Users)
                 .HasForeignKey(ur => ur.RoleId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Address>()
+                .HasOne(a => a.City)
+                .WithMany(c => c.Addresses)
+                .HasForeignKey(a => a.CityId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Country>()
+                .HasMany(c => c.Cities)
+                .WithOne(ci => ci.Country)
+                .HasForeignKey(c => c.CityId)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }
