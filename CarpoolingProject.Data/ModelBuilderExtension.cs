@@ -117,10 +117,39 @@ namespace CarpoolingProject.Data
                     UserId=2
                 }
             };
+            var addresses = new List<Address>
+            {
+                new Address
+                {
+                    AddressId=1,
+                    StreetName="ulica selo",
+                    CityId=1
+                }
+            };
+            var cities = new List<City>
+            {
+                new City
+                {
+                    CityId=1,
+                    Name="Varna",
+                    CountryId=1
+                }
+            };
+            var countries = new List<Country>
+            {
+                new Country
+                {
+                    Id=1,
+                    Name="Bulgaria"
+                }
+            };
             modelBuilder.Entity<User>().HasData(users);
             modelBuilder.Entity<Travel>().HasData(travels);
             modelBuilder.Entity<Role>().HasData(roles);
             modelBuilder.Entity<UserRole>().HasData(userRoles);
+            modelBuilder.Entity<City>().HasData(cities);
+            modelBuilder.Entity<Address>().HasData(addresses);
+            modelBuilder.Entity<Country>().HasData(countries);
             
         }
     }

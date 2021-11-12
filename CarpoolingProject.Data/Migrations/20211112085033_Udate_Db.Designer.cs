@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarpoolingProject.Data.Migrations
 {
     [DbContext(typeof(CarpoolingContext))]
-    [Migration("20211112010415_Update_db")]
-    partial class Update_db
+    [Migration("20211112085033_Udate_Db")]
+    partial class Udate_Db
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -100,6 +100,14 @@ namespace CarpoolingProject.Data.Migrations
                     b.HasIndex("CityId");
 
                     b.ToTable("Addresses");
+
+                    b.HasData(
+                        new
+                        {
+                            AddressId = 1,
+                            CityId = 1,
+                            StreetName = "ulica selo"
+                        });
                 });
 
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.City", b =>
@@ -121,6 +129,14 @@ namespace CarpoolingProject.Data.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("City");
+
+                    b.HasData(
+                        new
+                        {
+                            CityId = 1,
+                            CountryId = 1,
+                            Name = "Varna"
+                        });
                 });
 
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.Country", b =>
@@ -137,6 +153,13 @@ namespace CarpoolingProject.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Countries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Bulgaria"
+                        });
                 });
 
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.Role", b =>

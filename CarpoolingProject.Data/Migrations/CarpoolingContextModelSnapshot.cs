@@ -98,6 +98,14 @@ namespace CarpoolingProject.Data.Migrations
                     b.HasIndex("CityId");
 
                     b.ToTable("Addresses");
+
+                    b.HasData(
+                        new
+                        {
+                            AddressId = 1,
+                            CityId = 1,
+                            StreetName = "ulica selo"
+                        });
                 });
 
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.City", b =>
@@ -119,6 +127,14 @@ namespace CarpoolingProject.Data.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("City");
+
+                    b.HasData(
+                        new
+                        {
+                            CityId = 1,
+                            CountryId = 1,
+                            Name = "Varna"
+                        });
                 });
 
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.Country", b =>
@@ -135,6 +151,13 @@ namespace CarpoolingProject.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Countries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Bulgaria"
+                        });
                 });
 
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.Role", b =>
