@@ -32,7 +32,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
             return responseModel;
         }
 
-        public async Task<DeleteCountryResponseModel> DeleteWarehouseAsync(DeleteCountryRequestModel requestModel)
+        public async Task<DeleteCountryResponseModel> DeleteCountryAsync(DeleteCountryRequestModel requestModel)
         {
             var responseModel = new DeleteCountryResponseModel();
             var country = await this.db.Countries.FirstOrDefaultAsync(c => c.Id == requestModel.Id);
