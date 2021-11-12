@@ -36,7 +36,11 @@ namespace CarpoolingProject
             services.AddControllers();
             services.AddControllersWithViews();
             services.AddScoped<ITravelService, TravelService>();
+<<<<<<< HEAD
             services.AddScoped<ICountryService, CountryService>(); 
+=======
+            services.AddScoped<IAddressService, AddressService>();
+>>>>>>> develop
             //services.AddSwaggerGen();
         }
 
