@@ -45,7 +45,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
                 )
             {
                 responseModel.IsSuccess = false;
-                responseModel.Message = Constants.TRAVEL_INVALID_PARAMS;
+                responseModel.Message = Constants.INVALID_PARAMS;
                 return responseModel;
             }
             var travel = new Travel()
