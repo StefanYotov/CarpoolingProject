@@ -139,7 +139,7 @@ namespace CarpoolingProject.Data
             {
                 new Country
                 {
-                    Id=1,
+                    CountryId=1,
                     Name="Bulgaria"
                 }
             };

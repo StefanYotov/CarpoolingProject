@@ -36,7 +36,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
         public async Task<DeleteCountryResponseModel> DeleteCountryAsync(DeleteCountryRequestModel requestModel)
         {
             var responseModel = new DeleteCountryResponseModel();
-            var country = await this.context.Countries.FirstOrDefaultAsync(c => c.Id == requestModel.Id);
+            var country = await this.context.Countries.FirstOrDefaultAsync(c => c.CountryId == requestModel.Id);
 
             if (country == null)
             {

@@ -4,14 +4,16 @@ using CarpoolingProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CarpoolingProject.Data.Migrations
 {
     [DbContext(typeof(CarpoolingContext))]
-    partial class CarpoolingContextModelSnapshot : ModelSnapshot
+    [Migration("20211112133005_Test_Cities")]
+    partial class Test_Cities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
