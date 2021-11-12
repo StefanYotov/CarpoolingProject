@@ -6,6 +6,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
 {
     public interface IAddressService
     {
-        Task<InfoResponseModel> CreateAddress(CreateAddressRequestModel requestModel);
+        Task<InfoResponseModel> CreateAddressAsync(CreateAddressRequestModel requestModel);
+        Task<InfoResponseModel> DeleteAddressAsync(DeleteAddressRequestModel requestModel);
     }
 }

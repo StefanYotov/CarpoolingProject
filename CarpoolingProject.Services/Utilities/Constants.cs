@@ -18,6 +18,8 @@ namespace CarpoolingProject.Services.Utilities
         public const string COUNTRY_NULL_ERROR = "Country cannot be null";
         public const string COUNTRY_DELETE_SUCCESSFULL = "Country Successfully deleted";
         public const string ADDRESS_CREATE_SUCCESS = "Address created succesfully";
+        public const string ADDRESS_DELETED_SUCCESS = "Address was successfully deleted";
+        public const string ADDRESS_NOT_FOUND = "Address could not be found";
        
        
 

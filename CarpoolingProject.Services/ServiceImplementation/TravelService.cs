@@ -113,7 +113,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
                 )
             {
                 response.IsSuccess = false;
-                response.Message = Constants.TRAVEL_INVALID_PARAMS;
+                response.Message = Constants.INVALID_PARAMS;
                 return response;
             }
             var travel = await context.Travels.FirstOrDefaultAsync(x => x.TravelId == requestModel.Id);

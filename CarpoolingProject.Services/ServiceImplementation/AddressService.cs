@@ -3,6 +3,7 @@ using CarpoolingProject.Models.EntityModels;
 using CarpoolingProject.Models.RequestModels;
 using CarpoolingProject.Models.ResponseModels;
 using CarpoolingProject.Services.Utilities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
             this.context = context;
         }
         
-        public async Task<InfoResponseModel> CreateAddress(CreateAddressRequestModel requestModel)
+        public async Task<InfoResponseModel> CreateAddressAsync(CreateAddressRequestModel requestModel)
         {
             var response = new InfoResponseModel();
             if (requestModel.StreetName == null || requestModel.CityId < 1)
@@ -40,6 +41,22 @@ namespace CarpoolingProject.Services.ServiceImplementation
             await context.SaveChangesAsync();
             return response;
             
+        }
+        public async Task<InfoResponseModel> DeleteAddressAsync(DeleteAddressRequestModel requestModel)
+        {
+            var respone = new InfoResponseModel();
+            var addressToDelete = await context.Addresses.FirstOrDefaultAsync(x => x.AddressId == requestModel.Id);
+            if (addressToDelete == null)
+            {
+                respone.IsSuccess = false;
+                respone.Message = Constants.ADDRESS_NOT_FOUND;
+                return respone;
+            }
+            respone.IsSuccess = true;
+            respone.Message = Constants.ADDRESS_DELETED_SUCCESS;
+            context.Addresses.Remove(addressToDelete);
+            context.SaveChanges();
+            return respone;
         }
     }
 }
