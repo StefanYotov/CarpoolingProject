@@ -27,7 +27,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
                 Name = requestModel.Name
             };
             responseModel.IsSuccess = true;
-            responseModel.Message = "Success";
+            responseModel.Message = "City Successfully created";
             this.context.Countries.Add(country);
             await this.context.SaveChangesAsync();
             return responseModel;

@@ -28,7 +28,7 @@ namespace CarpoolingProject
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
-           
+
             services.AddDbContext<CarpoolingContext>(options =>
             {
                 options.UseSqlServer("Server=.\\SQLEXPRESS;Database=Carpooling;Trusted_Connection=True;");
@@ -37,8 +37,9 @@ namespace CarpoolingProject
             services.AddControllersWithViews();
             services.AddScoped<ITravelService, TravelService>();
 
-            services.AddScoped<ICountryService, CountryService>(); 
+            services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<IAddressService, AddressService>();
+            services.AddScoped<ICityService, CityService>();
 
             //services.AddSwaggerGen();
         }

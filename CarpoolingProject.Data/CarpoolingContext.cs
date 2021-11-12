@@ -20,6 +20,7 @@ namespace CarpoolingProject.Data
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
