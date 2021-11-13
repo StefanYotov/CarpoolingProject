@@ -52,6 +52,12 @@ namespace CarpoolingProject.Data
                 .WithOne(ci => ci.Country)
                 .HasForeignKey(c => c.CityId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<City>()
+                .HasOne(c => c.Country)
+                .WithMany(ci => ci.Cities)
+                .HasForeignKey(c => c.CountryId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

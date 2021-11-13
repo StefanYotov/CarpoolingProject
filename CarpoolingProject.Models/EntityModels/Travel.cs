@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarpoolingProject.Data
+namespace CarpoolingProject.Models.EntityModels
 {
     public class Travel
     {
@@ -14,7 +14,6 @@ namespace CarpoolingProject.Data
         public int TravelId { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
-
         [Required]
         public string StartPoint { get; set; }
         [Required]
@@ -23,6 +22,6 @@ namespace CarpoolingProject.Data
         public DateTime DepartureTime { get; set; }
         [Required]
         public int FreeSpots { get; set; }
-        public ICollection<User> Users { get; set; }
+        public virtual ICollection<User> Passengers { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using CarpoolingProject.Data;
+﻿using CarpoolingProject.Models.EntityModels;
 using System;
 
 namespace CarpoolingProject.Services.Dtos

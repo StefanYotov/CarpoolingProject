@@ -7,8 +7,7 @@ namespace CarpoolingProject.Models.EntityModels
         public int AddressId { get; set; }
         [Required]
         public string StreetName { get; set; }
-        
         public int CityId { get; set; }
-        public City City { get; set; }    
+        public City City { get; set; }
     }
 }
