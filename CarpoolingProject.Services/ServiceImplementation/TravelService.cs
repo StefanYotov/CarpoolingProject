@@ -1,5 +1,4 @@
 ﻿using CarpoolingProject.Data;
-using CarpoolingProject.Models.RequestModels;
 using CarpoolingProject.Models.ResponseModels;
 using CarpoolingProject.Services.Dtos;
 using CarpoolingProject.Services.Exceptions;
@@ -10,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CarpoolingProject.Models.EntityModels;
+using CarpoolingProject.Models.RequestModels;
 
 namespace CarpoolingProject.Services.ServiceImplementation
 {
@@ -56,7 +56,6 @@ namespace CarpoolingProject.Services.ServiceImplementation
                 EndPoint = requestModel.EndPoint,
                 DepartureTime = requestModel.DepartureTime,
                 FreeSpots = requestModel.FreeSpots
-
             };
             context.Travels.Add(travel);
             await context.SaveChangesAsync();
@@ -157,7 +156,19 @@ namespace CarpoolingProject.Services.ServiceImplementation
             }
             return response;
         }
-
+        public async Task<InfoResponseModel> FinishedTravel(FinishedTravelRequestModel requestModel)
+        {
+            var travel = await GetTravel(requestModel.Id);
+            var response = new InfoResponseModel();
+            if (requestModel.IsFinished)
+            {
+                response.Message = "Travel finished!";
+                travel.User.TravelCountAsDriver++;
+                return response;
+            }
+            response.Message = "We are still travelling.";
+            return response;
+        }
 
 
     }
