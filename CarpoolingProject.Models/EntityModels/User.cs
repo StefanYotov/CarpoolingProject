@@ -1,17 +1,11 @@
-﻿using CarpoolingProject.Data;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarpoolingProject.Models.EntityModels
 {
     public class User
     {
-        
+        [Key]
         public int UserId { get; set; }
         [Required]
         [MinLength(2, ErrorMessage = "Username must be {0}"), MaxLength(20)]

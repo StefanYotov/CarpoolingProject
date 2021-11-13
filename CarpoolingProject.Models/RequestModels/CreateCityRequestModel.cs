@@ -9,5 +9,6 @@ namespace CarpoolingProject.Models.RequestModels
     public class CreateCityRequestModel
     {
         public string Name { get; set; }
+        public int CountryId { get; set; }
     }
 }

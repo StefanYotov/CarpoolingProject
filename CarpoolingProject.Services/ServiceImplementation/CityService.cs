@@ -28,7 +28,8 @@ namespace CarpoolingProject.Services.ServiceImplementation
 
             var city = new City()
             {
-                Name = requestModel.Name
+                Name = requestModel.Name,
+                CountryId = requestModel.CountryId
             };
             responseModel.IsSuccess = true;
             responseModel.Message = Constants.CITY_CREATE_SUCCESS;

@@ -1,4 +1,5 @@
 ﻿using CarpoolingProject.Data;
+using CarpoolingProject.Models.EntityModels;
 using CarpoolingProject.Models.RequestModels;
 using CarpoolingProject.Models.ResponseModels;
 using CarpoolingProject.Services.Dtos;
