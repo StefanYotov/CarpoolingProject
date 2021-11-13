@@ -23,6 +23,10 @@ namespace CarpoolingProject.Models.EntityModels
         public string Email { get; set; }
         [Required]
         public int PhoneNumber { get; set; }
+        public int TravelCountAsDriver { get; set; }
+        public int StarsCount { get; set; }
+        public int ReviewCount { get; set; }
         public ICollection<UserRole> Roles { get; set; } = new List<UserRole>();
+        
     }
 }

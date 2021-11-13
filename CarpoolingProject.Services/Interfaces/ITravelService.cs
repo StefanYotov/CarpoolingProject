@@ -16,6 +16,8 @@ namespace CarpoolingProject.Services.Interfaces
         Task<InfoResponseModel> CreateTravelAsync(CreateTravelRequestModel requestModel);
         Task<InfoResponseModel> DeleteTravelAsync(DeleteTravelRequestModel requestModel);
         Task<InfoResponseModel> UpdateTravelAsync(UpdateTravelRequestModel requestModel);
-        //Travel UpdateTravel(int id, Travel travel);
+        Task<InfoResponseModel> FinishedTravel(FinishedTravelRequestModel requestModel);
+        Task<InfoResponseModel> ApplyForTravel(ApplyForTravelRequestModel requestModel);
+        Task<IEnumerable<User>> ListApplicantsForTravel(GetTravelRequestModel requestModel);
     }
 }

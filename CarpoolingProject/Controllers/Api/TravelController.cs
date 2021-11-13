@@ -48,5 +48,11 @@ namespace CarpoolingProject.Web.Controllers.Api
             var response = await travelService.UpdateTravelAsync(requestModel);
             return this.Ok(response);
         }
+        [HttpGet("travel")]
+        public async Task<IActionResult> TravelStatus(FinishedTravelRequestModel requestModel)
+        {
+            var result = await travelService.FinishedTravel(requestModel);
+            return this.Ok(result);
+        }
     }
 }

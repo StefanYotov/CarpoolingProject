@@ -22,6 +22,7 @@ namespace CarpoolingProject.Models.EntityModels
         public DateTime DepartureTime { get; set; }
         [Required]
         public int FreeSpots { get; set; }
-        public virtual ICollection<User> Passengers { get; set; }
+        public virtual ICollection<User> Passengers { get; set; } = new List<User>();
+        public virtual ICollection<User> ApplicantsForTravel { get; set; } = new List<User>();
     }
 }
