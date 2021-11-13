@@ -10,15 +10,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using CarpoolingProject.Models.EntityModels;
 using CarpoolingProject.Models.RequestModels;
+using CarpoolingProject.Models.Dtos;
 
 namespace CarpoolingProject.Services.ServiceImplementation
 {
     public class TravelService : ITravelService
     {
         private readonly CarpoolingContext context;
-        public TravelService(CarpoolingContext context)
+        private readonly IUserService userService;
+
+        public TravelService(CarpoolingContext context,IUserService userService)
         {
             this.context = context;
+            this.userService = userService;
         }
 
         public async Task<Travel> GetTravel(int id)
@@ -36,6 +40,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
             var travelsCount = this.context.Travels.Count();
             return travelsCount;
         }
+       
         public async Task<InfoResponseModel> CreateTravelAsync(CreateTravelRequestModel requestModel)
         {
             var responseModel = new InfoResponseModel();
@@ -85,16 +90,6 @@ namespace CarpoolingProject.Services.ServiceImplementation
             return responseModel;
 
         }
-        //public Travel UpdateTravel(int id, Travel travel)
-        //{
-        //    var travelToUpdate = GetTravel(id);
-        //    ValidateDate(travel);
-        //    travelToUpdate.StartPoint = travel.StartPoint;
-        //    travelToUpdate.EndPoint = travel.EndPoint;
-        //    travelToUpdate.DepartureTime = travel.DepartureTime;
-        //    travelToUpdate.FreeSpots = travel.FreeSpots;
-        //    return travelToUpdate;
-        //}
         private void ValidateDate(Travel travel)
         {
             if (this.GetTravel(travel.UserId) == null)
@@ -164,10 +159,33 @@ namespace CarpoolingProject.Services.ServiceImplementation
             {
                 response.Message = "Travel finished!";
                 travel.User.TravelCountAsDriver++;
+                context.Travels.Remove(travel);
                 return response;
             }
             response.Message = "We are still travelling.";
             return response;
+        }
+        public async Task<InfoResponseModel> ApplyForTravel(ApplyForTravelRequestModel requestModel)
+        {
+            var response = new InfoResponseModel();
+            var passenger = await userService.GetUser(requestModel.UserId);
+            var travel = await GetTravel(requestModel.Id);
+            if (travel != null)
+            {
+                travel.ApplicantsForTravel.Add(passenger);
+                response.IsSuccess = true;
+                response.Message = "Added successfully to list";
+                return response;
+            }
+            response.IsSuccess = false;
+            response.Message = "Failed to add to list";
+            return response;
+        }
+        public async Task<IEnumerable<User>> ListApplicantsForTravel(GetTravelRequestModel requestModel)
+        {
+            var travel = await GetTravel(requestModel.Id);
+
+            return travel.ApplicantsForTravel;
         }
 
 

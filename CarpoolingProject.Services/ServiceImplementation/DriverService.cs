@@ -17,11 +17,13 @@ namespace CarpoolingProject.Services.ServiceImplementation
     {
         private readonly CarpoolingContext context;
         private readonly ITravelService travelService;
+        private readonly IUserService userService;
 
-        public DriverService(CarpoolingContext context,ITravelService travelService)
+        public DriverService(CarpoolingContext context,ITravelService travelService,IUserService userService)
         {
             this.context = context;
             this.travelService = travelService;
+            this.userService = userService;
         }
         
         public async Task<IEnumerable<DriverDto>> GetAllDriversAsync()
@@ -29,7 +31,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
             var drivers = await context.Users.Where(x=>x.Roles.Any(r=>r.Role.Name=="Driver")).Select(x=> new DriverDto(x)).ToListAsync();
             return drivers;
         }
-        public async Task<InfoResponseModel> UpdateTimeOfDeparture(UpdateTimeOfDepartureRequestModel requestModel)
+        public async Task<InfoResponseModel> UpdateTimeOfDepartureAsync(UpdateTimeOfDepartureRequestModel requestModel)
         {
             var response = new InfoResponseModel();
             var travel = await travelService.GetTravel(requestModel.Id);
@@ -45,6 +47,27 @@ namespace CarpoolingProject.Services.ServiceImplementation
             response.IsSuccess = false;
             return response;
         }
-        public async Task<InfoResponseModel> SelectUsers(Selec)
+        public async Task<InfoResponseModel> SelectUser(SelectPassengerRequestModel requestModel)
+        {
+            var response = new InfoResponseModel();
+            var selectedPassenger = await userService.GetUser(requestModel.Id);
+            var travel = await travelService.GetTravel(requestModel.TravelId);
+            if (selectedPassenger != null && travel!=null)
+            {
+                if (requestModel.Liked)
+                {
+                    response.Message = $"You liked ";
+                    travel.Passengers.Add(selectedPassenger);
+                    travel.ApplicantsForTravel.Remove(selectedPassenger);
+                    return response;
+                }
+                travel.ApplicantsForTravel.Remove(selectedPassenger);
+                response.Message = $"You didn't like {selectedPassenger.UserId}";
+                return response;
+            }
+            response.Message = "Invalid info";
+            response.IsSuccess = false;
+            return response;
+        }
     }
 }

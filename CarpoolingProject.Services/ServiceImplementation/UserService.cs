@@ -1,6 +1,9 @@
 ﻿using CarpoolingProject.Data;
 using CarpoolingProject.Models.Dtos;
+using CarpoolingProject.Models.EntityModels;
+using CarpoolingProject.Models.RequestModels;
 using CarpoolingProject.Models.ResponseModels;
+using CarpoolingProject.Services.Exceptions;
 using CarpoolingProject.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,6 +22,11 @@ namespace CarpoolingProject.Services.ServiceImplementation
         public UserService(CarpoolingContext context)
         {
             this.context = context;
+        }
+        public async Task<User> GetUser(int id)
+        {
+            var user = await context.Users.FirstOrDefaultAsync(x => x.UserId == id);
+            return user?? throw new EntityNotFoundException();
         }
         public async Task<IEnumerable<UserDto>> GetAllPassengers()
         {
