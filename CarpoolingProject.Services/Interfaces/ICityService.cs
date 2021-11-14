@@ -1,4 +1,5 @@
-﻿using CarpoolingProject.Models.RequestModels;
+﻿using CarpoolingProject.Models.EntityModels;
+using CarpoolingProject.Models.RequestModels;
 using CarpoolingProject.Models.ResponseModels;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace CarpoolingProject.Services.Interfaces
 {
     public interface ICityService
     {
+        Task<City> GetCity(int id);
         Task<InfoResponseModel> CreateCityAsync(CreateCityRequestModel requestModel);
         Task<InfoResponseModel> DeleteCityAsync(DeleteCityRequestModel requestModel);
     }

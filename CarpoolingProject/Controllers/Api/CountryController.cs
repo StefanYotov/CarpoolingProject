@@ -32,5 +32,21 @@ namespace CarpoolingProject.Web.Controllers.Api
             var response = await countryService.DeleteCountryAsync(requestModel);
             return Ok(response);
         }
+        [HttpPost("add/city")]
+        public async Task<IActionResult> AddCityToCountry([FromBody] AddCitiesToCountryRequestModel requestModel)
+        {
+            var result = await countryService.AddCitiesToCountryAsync(requestModel);
+            return this.Ok(result);
+        }
+        [HttpGet("cities")]
+        public async Task<IActionResult> ListCities([FromBody] ShowCitiesRequestModel requestModel)
+        {
+            var result = await countryService.ShowCities(requestModel);
+            if (result.Count() < 1)
+            {
+                return this.NoContent();
+            }
+            return this.Ok(result);
+        }
     }
 }

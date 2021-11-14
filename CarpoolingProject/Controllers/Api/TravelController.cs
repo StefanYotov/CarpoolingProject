@@ -33,7 +33,7 @@ namespace CarpoolingProject.Web.Controllers.Api
             return this.Ok(responce);
         }
         [HttpDelete("")]
-        public async Task<IActionResult> Delete(DeleteTravelRequestModel requestModel)
+        public async Task<IActionResult> Delete([FromBody] DeleteTravelRequestModel requestModel)
         {
             var responce = await travelService.DeleteTravelAsync(requestModel);
             if (responce.IsSuccess)
@@ -43,25 +43,25 @@ namespace CarpoolingProject.Web.Controllers.Api
             return BadRequest(responce.Message);
         }
         [HttpPut("")]
-        public async Task<IActionResult> Update(UpdateTravelRequestModel requestModel)
+        public async Task<IActionResult> Update([FromBody] UpdateTravelRequestModel requestModel)
         {
             var response = await travelService.UpdateTravelAsync(requestModel);
             return this.Ok(response);
         }
         [HttpPut("status")]
-        public async Task<IActionResult> TravelStatus(FinishedTravelRequestModel requestModel)
+        public async Task<IActionResult> TravelStatus([FromBody] FinishedTravelRequestModel requestModel)
         {
             var result = await travelService.FinishedTravel(requestModel);
             return this.Ok(result);
         }
         [HttpPost("apply")]
-        public async Task<IActionResult> ApplyForTravel(ApplyForTravelRequestModel requestModel)
+        public async Task<IActionResult> ApplyForTravel([FromBody] ApplyForTravelRequestModel requestModel)
         {
             var result = await travelService.ApplyForTravel(requestModel);
             return this.Ok(result);
         }
         [HttpGet("applicants")]
-        public async Task<IActionResult> ListApplicantsForTravel(GetTravelRequestModel requestModel)
+        public async Task<IActionResult> ListApplicantsForTravel([FromBody] GetTravelRequestModel requestModel)
         {
             var result = await travelService.ListApplicantsForTravel(requestModel);
             return this.Ok(result);

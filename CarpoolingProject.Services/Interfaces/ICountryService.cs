@@ -1,4 +1,5 @@
-﻿using CarpoolingProject.Models.RequestModels;
+﻿using CarpoolingProject.Models.EntityModels;
+using CarpoolingProject.Models.RequestModels;
 using CarpoolingProject.Models.ResponseModels;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,10 @@ namespace CarpoolingProject.Services.Interfaces
 {
     public interface ICountryService
     {
-        Task<CreateCountryResponseModel> CreateCountryAsync(CreateCountryRequestModel requestModel);
-        Task<DeleteCountryResponseModel> DeleteCountryAsync(DeleteCountryRequestModel requestModel);
+        Task<Country> GetCountry(int id);
+        Task<InfoResponseModel> CreateCountryAsync(CreateCountryRequestModel requestModel);
+        Task<InfoResponseModel> DeleteCountryAsync(DeleteCountryRequestModel requestModel);
+        Task<InfoResponseModel> AddCitiesToCountryAsync(AddCitiesToCountryRequestModel requestModel);
+        Task<IEnumerable<City>> ShowCities(ShowCitiesRequestModel requestModel);
     }
 }
