@@ -23,7 +23,10 @@ namespace CarpoolingProject.Data
                     LastName="Salama",
                     Email="pesho.salama@gmail.com",
                     PhoneNumber=088865432,
-                    
+                    TravelCountAsDriver=0,
+                    StarsCount=0,
+                    ReviewCount=0
+
                 },
                 new User
                 {
@@ -34,7 +37,10 @@ namespace CarpoolingProject.Data
                     LastName="Tarikata",
                     Email="foncho.tarikata@gmail.com",
                     PhoneNumber=088863432,
-                    
+                    TravelCountAsDriver=0,
+                    StarsCount=0,
+                    ReviewCount=0
+
                 },
                 new User
                 {
@@ -45,7 +51,10 @@ namespace CarpoolingProject.Data
                     LastName="Grigorov",
                     Email="lyubo.grigorov@gmail.com",
                     PhoneNumber=088845432,
-                    
+                    TravelCountAsDriver=0,
+                    StarsCount=0,
+                    ReviewCount=0
+
                 }
             };
             var travels = new List<Travel>
@@ -150,7 +159,7 @@ namespace CarpoolingProject.Data
             modelBuilder.Entity<City>().HasData(cities);
             modelBuilder.Entity<Address>().HasData(addresses);
             modelBuilder.Entity<Country>().HasData(countries);
-            
+
         }
     }
 }

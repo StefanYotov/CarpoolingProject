@@ -175,6 +175,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
                 travel.ApplicantsForTravel.Add(passenger);
                 response.IsSuccess = true;
                 response.Message = "Added successfully to list";
+                await context.SaveChangesAsync();
                 return response;
             }
             response.IsSuccess = false;
