@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarpoolingProject.Data.Migrations
 {
     [DbContext(typeof(CarpoolingContext))]
-    [Migration("20211113235602_Update_Db")]
-    partial class Update_Db
+    [Migration("20211114142414_Test")]
+    partial class Test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -200,6 +200,21 @@ namespace CarpoolingProject.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("CarpoolingProject.Models.EntityModels.TravelApplication", b =>
+                {
+                    b.Property<int>("ApplicantId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TravelId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ApplicantId", "TravelId");
+
+                    b.HasIndex("TravelId");
+
+                    b.ToTable("TravelApplications");
+                });
+
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -240,9 +255,6 @@ namespace CarpoolingProject.Data.Migrations
                     b.Property<int?>("TravelId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TravelId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -251,8 +263,6 @@ namespace CarpoolingProject.Data.Migrations
                     b.HasKey("UserId");
 
                     b.HasIndex("TravelId");
-
-                    b.HasIndex("TravelId1");
 
                     b.ToTable("Users");
 
@@ -363,15 +373,30 @@ namespace CarpoolingProject.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("CarpoolingProject.Models.EntityModels.TravelApplication", b =>
+                {
+                    b.HasOne("CarpoolingProject.Models.EntityModels.User", "Applicant")
+                        .WithMany("TravelApplicants")
+                        .HasForeignKey("ApplicantId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("CarpoolingProject.Models.EntityModels.Travel", "Travel")
+                        .WithMany("ApplicantsForTravel")
+                        .HasForeignKey("TravelId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Applicant");
+
+                    b.Navigation("Travel");
+                });
+
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.User", b =>
                 {
                     b.HasOne("CarpoolingProject.Models.EntityModels.Travel", null)
-                        .WithMany("ApplicantsForTravel")
-                        .HasForeignKey("TravelId");
-
-                    b.HasOne("CarpoolingProject.Models.EntityModels.Travel", null)
                         .WithMany("Passengers")
-                        .HasForeignKey("TravelId1");
+                        .HasForeignKey("TravelId");
                 });
 
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.UserRole", b =>
@@ -418,6 +443,8 @@ namespace CarpoolingProject.Data.Migrations
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.User", b =>
                 {
                     b.Navigation("Roles");
+
+                    b.Navigation("TravelApplicants");
                 });
 #pragma warning restore 612, 618
         }

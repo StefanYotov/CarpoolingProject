@@ -28,7 +28,11 @@ namespace CarpoolingProject
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
-
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
+          
             services.AddDbContext<CarpoolingContext>(options =>
             {
                 options.UseSqlServer("Server=.\\SQLEXPRESS;Database=Carpooling;Trusted_Connection=True;");

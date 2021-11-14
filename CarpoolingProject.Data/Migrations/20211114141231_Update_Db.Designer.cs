@@ -4,14 +4,16 @@ using CarpoolingProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CarpoolingProject.Data.Migrations
 {
     [DbContext(typeof(CarpoolingContext))]
-    partial class CarpoolingContextModelSnapshot : ModelSnapshot
+    [Migration("20211114141231_Update_Db")]
+    partial class Update_Db
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -210,7 +212,7 @@ namespace CarpoolingProject.Data.Migrations
 
                     b.HasIndex("TravelId");
 
-                    b.ToTable("TravelApplications");
+                    b.ToTable("TravelApplication");
                 });
 
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.User", b =>

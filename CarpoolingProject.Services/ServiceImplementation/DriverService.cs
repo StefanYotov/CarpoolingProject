@@ -52,16 +52,23 @@ namespace CarpoolingProject.Services.ServiceImplementation
             var response = new InfoResponseModel();
             var selectedPassenger = await userService.GetUser(requestModel.Id);
             var travel = await travelService.GetTravel(requestModel.TravelId);
+            
             if (selectedPassenger != null && travel!=null)
             {
+                var travelAplication = new TravelApplication
+                {
+                    ApplicantId = selectedPassenger.UserId,
+                    TravelId = travel.TravelId
+                };
                 if (requestModel.Liked)
                 {
                     response.Message = $"You liked ";
                     travel.Passengers.Add(selectedPassenger);
-                    travel.ApplicantsForTravel.Remove(selectedPassenger);
+                    
+                    travel.ApplicantsForTravel.Remove(travelAplication);
                     return response;
                 }
-                travel.ApplicantsForTravel.Remove(selectedPassenger);
+                travel.ApplicantsForTravel.Remove(travelAplication);
                 response.Message = $"You didn't like {selectedPassenger.UserId}";
                 return response;
             }
