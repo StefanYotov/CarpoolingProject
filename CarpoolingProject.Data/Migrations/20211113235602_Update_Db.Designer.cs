@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarpoolingProject.Data.Migrations
 {
     [DbContext(typeof(CarpoolingContext))]
-    [Migration("20211112133005_Test_Cities")]
-    partial class Test_Cities
+    [Migration("20211113235602_Update_Db")]
+    partial class Update_Db
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,66 +20,6 @@ namespace CarpoolingProject.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("CarpoolingProject.Data.Travel", b =>
-                {
-                    b.Property<int>("TravelId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DepartureTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EndPoint")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FreeSpots")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StartPoint")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("TravelId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Travels");
-
-                    b.HasData(
-                        new
-                        {
-                            TravelId = 1,
-                            DepartureTime = new DateTime(2021, 11, 15, 22, 50, 0, 0, DateTimeKind.Unspecified),
-                            EndPoint = "Selo Sofia",
-                            FreeSpots = 4,
-                            StartPoint = "velcho atanasov 55",
-                            UserId = 1
-                        },
-                        new
-                        {
-                            TravelId = 2,
-                            DepartureTime = new DateTime(2021, 11, 15, 22, 50, 0, 0, DateTimeKind.Unspecified),
-                            EndPoint = "Selo Sofia",
-                            FreeSpots = 2,
-                            StartPoint = "velcho atanasov 55",
-                            UserId = 2
-                        },
-                        new
-                        {
-                            TravelId = 3,
-                            DepartureTime = new DateTime(2021, 11, 15, 22, 50, 0, 0, DateTimeKind.Unspecified),
-                            EndPoint = "Selo Sofia",
-                            FreeSpots = 3,
-                            StartPoint = "velcho atanasov 55",
-                            UserId = 3
-                        });
-                });
 
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.Address", b =>
                 {
@@ -200,6 +140,66 @@ namespace CarpoolingProject.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("CarpoolingProject.Models.EntityModels.Travel", b =>
+                {
+                    b.Property<int>("TravelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DepartureTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EndPoint")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FreeSpots")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StartPoint")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TravelId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Travels");
+
+                    b.HasData(
+                        new
+                        {
+                            TravelId = 1,
+                            DepartureTime = new DateTime(2021, 11, 15, 22, 50, 0, 0, DateTimeKind.Unspecified),
+                            EndPoint = "Selo Sofia",
+                            FreeSpots = 4,
+                            StartPoint = "velcho atanasov 55",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            TravelId = 2,
+                            DepartureTime = new DateTime(2021, 11, 15, 22, 50, 0, 0, DateTimeKind.Unspecified),
+                            EndPoint = "Selo Sofia",
+                            FreeSpots = 2,
+                            StartPoint = "velcho atanasov 55",
+                            UserId = 2
+                        },
+                        new
+                        {
+                            TravelId = 3,
+                            DepartureTime = new DateTime(2021, 11, 15, 22, 50, 0, 0, DateTimeKind.Unspecified),
+                            EndPoint = "Selo Sofia",
+                            FreeSpots = 3,
+                            StartPoint = "velcho atanasov 55",
+                            UserId = 3
+                        });
+                });
+
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -228,7 +228,19 @@ namespace CarpoolingProject.Data.Migrations
                     b.Property<int>("PhoneNumber")
                         .HasColumnType("int");
 
+                    b.Property<int>("ReviewCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StarsCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TravelCountAsDriver")
+                        .HasColumnType("int");
+
                     b.Property<int?>("TravelId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TravelId1")
                         .HasColumnType("int");
 
                     b.Property<string>("UserName")
@@ -239,6 +251,8 @@ namespace CarpoolingProject.Data.Migrations
                     b.HasKey("UserId");
 
                     b.HasIndex("TravelId");
+
+                    b.HasIndex("TravelId1");
 
                     b.ToTable("Users");
 
@@ -251,6 +265,9 @@ namespace CarpoolingProject.Data.Migrations
                             LastName = "Salama",
                             Password = "bezparola",
                             PhoneNumber = 88865432,
+                            ReviewCount = 0,
+                            StarsCount = 0,
+                            TravelCountAsDriver = 0,
                             UserName = "PeshoSalama"
                         },
                         new
@@ -261,6 +278,9 @@ namespace CarpoolingProject.Data.Migrations
                             LastName = "Tarikata",
                             Password = "bezparola",
                             PhoneNumber = 88863432,
+                            ReviewCount = 0,
+                            StarsCount = 0,
+                            TravelCountAsDriver = 0,
                             UserName = "Customer"
                         },
                         new
@@ -271,6 +291,9 @@ namespace CarpoolingProject.Data.Migrations
                             LastName = "Grigorov",
                             Password = "bezparola",
                             PhoneNumber = 88845432,
+                            ReviewCount = 0,
+                            StarsCount = 0,
+                            TravelCountAsDriver = 0,
                             UserName = "Shafior"
                         });
                 });
@@ -307,23 +330,12 @@ namespace CarpoolingProject.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CarpoolingProject.Data.Travel", b =>
-                {
-                    b.HasOne("CarpoolingProject.Models.EntityModels.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.Address", b =>
                 {
                     b.HasOne("CarpoolingProject.Models.EntityModels.City", "City")
-                        .WithMany()
+                        .WithMany("Addresses")
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("City");
@@ -334,17 +346,32 @@ namespace CarpoolingProject.Data.Migrations
                     b.HasOne("CarpoolingProject.Models.EntityModels.Country", "Country")
                         .WithMany("Cities")
                         .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Country");
                 });
 
+            modelBuilder.Entity("CarpoolingProject.Models.EntityModels.Travel", b =>
+                {
+                    b.HasOne("CarpoolingProject.Models.EntityModels.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.User", b =>
                 {
-                    b.HasOne("CarpoolingProject.Data.Travel", null)
-                        .WithMany("Users")
+                    b.HasOne("CarpoolingProject.Models.EntityModels.Travel", null)
+                        .WithMany("ApplicantsForTravel")
                         .HasForeignKey("TravelId");
+
+                    b.HasOne("CarpoolingProject.Models.EntityModels.Travel", null)
+                        .WithMany("Passengers")
+                        .HasForeignKey("TravelId1");
                 });
 
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.UserRole", b =>
@@ -366,9 +393,9 @@ namespace CarpoolingProject.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("CarpoolingProject.Data.Travel", b =>
+            modelBuilder.Entity("CarpoolingProject.Models.EntityModels.City", b =>
                 {
-                    b.Navigation("Users");
+                    b.Navigation("Addresses");
                 });
 
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.Country", b =>
@@ -379,6 +406,13 @@ namespace CarpoolingProject.Data.Migrations
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.Role", b =>
                 {
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("CarpoolingProject.Models.EntityModels.Travel", b =>
+                {
+                    b.Navigation("ApplicantsForTravel");
+
+                    b.Navigation("Passengers");
                 });
 
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.User", b =>

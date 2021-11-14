@@ -40,6 +40,8 @@ namespace CarpoolingProject
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<IAddressService, AddressService>();
             services.AddScoped<ICityService, CityService>();
+            services.AddScoped<IDriverService, DriverService>();
+            services.AddScoped<IUserService, UserService>();
 
             //services.AddSwaggerGen();
         }
