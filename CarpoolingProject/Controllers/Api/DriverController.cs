@@ -30,13 +30,13 @@ namespace CarpoolingProject.Web.Controllers.Api
             return this.Ok(result);
         }
         [HttpPut("departure")]
-        public async Task<IActionResult> UpdateDepartureTime(UpdateTimeOfDepartureRequestModel requestModel)
+        public async Task<IActionResult> UpdateDepartureTime([FromBody] UpdateTimeOfDepartureRequestModel requestModel)
         {
             var result = await driverService.UpdateTimeOfDepartureAsync(requestModel);
             return this.Ok(result);
         }
         [HttpPost("select")]
-        public async Task<IActionResult> SelectUser(SelectPassengerRequestModel requestModel)
+        public async Task<IActionResult> SelectUser([FromBody] SelectPassengerRequestModel requestModel)
         {
             var result = await driverService.SelectUser(requestModel);
             return this.Ok(result);

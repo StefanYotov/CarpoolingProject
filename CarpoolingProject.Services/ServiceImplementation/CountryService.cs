@@ -5,6 +5,7 @@ using CarpoolingProject.Models.ResponseModels;
 using CarpoolingProject.Services.Interfaces;
 using CarpoolingProject.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CarpoolingProject.Services.ServiceImplementation
@@ -12,15 +13,21 @@ namespace CarpoolingProject.Services.ServiceImplementation
     public class CountryService : ICountryService
     {
         private readonly CarpoolingContext context;
+        private readonly ICityService cityService;
 
-        public CountryService(CarpoolingContext context)
+        public CountryService(CarpoolingContext context,ICityService cityService)
         {
             this.context = context;
+            this.cityService = cityService;
         }
-
-        public async Task<CreateCountryResponseModel> CreateCountryAsync(CreateCountryRequestModel requestModel)
+        public async Task<Country> GetCountry(int id)
         {
-            var responseModel = new CreateCountryResponseModel();
+            var country = await this.context.Countries.FirstOrDefaultAsync(c => c.CountryId == id);
+            return country;
+        }
+        public async Task<InfoResponseModel> CreateCountryAsync(CreateCountryRequestModel requestModel)
+        {
+            var responseModel = new InfoResponseModel();
 
             var country = new Country()
             {
@@ -33,26 +40,42 @@ namespace CarpoolingProject.Services.ServiceImplementation
             return responseModel;
         }
 
-        public async Task<DeleteCountryResponseModel> DeleteCountryAsync(DeleteCountryRequestModel requestModel)
+        public async Task<InfoResponseModel> DeleteCountryAsync(DeleteCountryRequestModel requestModel)
         {
-            var responseModel = new DeleteCountryResponseModel();
-            var country = await this.context.Countries.FirstOrDefaultAsync(c => c.CountryId == requestModel.Id);
+            var response = new InfoResponseModel();
+            var country = await GetCountry(requestModel.Id);
 
             if (country == null)
             {
-                responseModel.Message = Constants.COUNTRY_NULL_ERROR;
-                responseModel.IsSuccess = false;
+                response.Message = Constants.COUNTRY_NULL_ERROR;
+                response.IsSuccess = false;
             }
 
             else
             {
-                responseModel.Message = Constants.COUNTRY_DELETE_SUCCESSFULL;
-                responseModel.IsSuccess = true;
+                response.Message = Constants.COUNTRY_DELETE_SUCCESSFULL;
+                response.IsSuccess = true;
                 this.context.Countries.Remove(country);
                 await this.context.SaveChangesAsync();
 
             }
-            return responseModel;
+            return response;
+        }
+        public async Task<InfoResponseModel> AddCitiesToCountryAsync(AddCitiesToCountryRequestModel requestModel)
+        {
+            var response = new InfoResponseModel();
+            var country = await GetCountry(requestModel.Id);
+            var city = await cityService.GetCity(requestModel.CityId);
+            country.Cities.Add(city);
+            await context.SaveChangesAsync();
+            response.Message = "City added to Country";
+            response.IsSuccess = true;
+            return response;
+        }
+        public async Task<IEnumerable<City>> ShowCities(ShowCitiesRequestModel requestModel)
+        {
+            var country = await GetCountry(requestModel.Id);
+            return country.Cities;
         }
     }
 }

@@ -21,42 +21,52 @@ namespace CarpoolingProject.Services.ServiceImplementation
         {
             this.context = context;
         }
-
+        public async Task<City> GetCity(int id)
+        {
+            var city = await context.Cities.FirstOrDefaultAsync(x => x.CityId == id);
+            return city;
+        }
         public async Task<InfoResponseModel> CreateCityAsync(CreateCityRequestModel requestModel)
         {
-            var responseModel = new InfoResponseModel();
+            var response = new InfoResponseModel();
+            if (context.Cities.Any(x => x.Name == requestModel.Name))
+            {
+                response.Message = "City already exists";
+                return response;
+            }
+            
 
             var city = new City()
             {
                 Name = requestModel.Name,
                 CountryId = requestModel.CountryId
             };
-            responseModel.IsSuccess = true;
-            responseModel.Message = Constants.CITY_CREATE_SUCCESS;
+            response.IsSuccess = true;
+            response.Message = Constants.CITY_CREATE_SUCCESS;
             this.context.Cities.Add(city);
             await this.context.SaveChangesAsync();
-            return responseModel;
+            return response;
         }
 
         public async Task<InfoResponseModel> DeleteCityAsync(DeleteCityRequestModel requestModel)
         {
-            var responseModel = new InfoResponseModel();
+            var response = new InfoResponseModel();
             var city = await this.context.Cities.FirstOrDefaultAsync(c => c.CityId == requestModel.Id);
 
             if (city == null)
             {
-                responseModel.Message = Constants.CITY_NULL_ERROR;
-                responseModel.IsSuccess = false;
+                response.Message = Constants.CITY_NULL_ERROR;
+                response.IsSuccess = false;
             }
 
             else
             {
-                responseModel.Message = Constants.CITY_DELETE_SUCCESSFULL;
-                responseModel.IsSuccess = true;
+                response.Message = Constants.CITY_DELETE_SUCCESSFULL;
+                response.IsSuccess = true;
                 this.context.Cities.Remove(city);
                 await this.context.SaveChangesAsync();
             }
-            return responseModel;
+            return response;
         }
     }
 }
