@@ -8,7 +8,7 @@ namespace CarpoolingProject.Models.RequestModels
 {
     public class ApplyForTravelRequestModel
     {
-        public int Id { get; set; }
+        public int TravelId { get; set; }
         public int UserId { get; set; }
     }
 }

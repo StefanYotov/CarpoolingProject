@@ -27,7 +27,8 @@ namespace CarpoolingProject.Services.ServiceImplementation
 
         public async Task<Travel> GetTravel(int id)
         {
-            var travel = await context.Travels.FirstOrDefaultAsync(x => x.TravelId == id);
+            var travel = await (context.Travels.Include(x=>x.ApplicantsForTravel)
+                .FirstOrDefaultAsync(x => x.TravelId == id));
             return travel ?? throw new EntityNotFoundException();
         }
         public async Task<IEnumerable<TravelDto>> GetAllTravelsAsync()
@@ -169,10 +170,15 @@ namespace CarpoolingProject.Services.ServiceImplementation
         {
             var response = new InfoResponseModel();
             var passenger = await userService.GetUser(requestModel.UserId);
-            var travel = await GetTravel(requestModel.Id);
+            var travel = await GetTravel(requestModel.TravelId);
             if (travel != null)
             {
-                travel.ApplicantsForTravel.Add(passenger);
+                var travelAplication = new TravelApplication
+                {
+                    ApplicantId = passenger.UserId,
+                    TravelId = travel.TravelId
+                };
+                travel.ApplicantsForTravel.Add(travelAplication);
                 response.IsSuccess = true;
                 response.Message = "Added successfully to list";
                 await context.SaveChangesAsync();
@@ -182,11 +188,22 @@ namespace CarpoolingProject.Services.ServiceImplementation
             response.Message = "Failed to add to list";
             return response;
         }
+        //Todo make async !!!!!!!!!!!!
         public async Task<IEnumerable<User>> ListApplicantsForTravel(GetTravelRequestModel requestModel)
         {
-            var travel = await GetTravel(requestModel.Id);
+            var travel = await GetTravel(requestModel.TravelId);
+            var applicantsIds = new List<int>();
+            foreach(var application in travel.ApplicantsForTravel)
+            {
+                applicantsIds.Add(application.ApplicantId);
+            }
 
-            return travel.ApplicantsForTravel;
+            var travelApplicants = new List<User>();
+            foreach(var applicatntsId in applicantsIds)
+            {
+                travelApplicants.Add(await userService.GetUser(applicatntsId));
+            }
+            return travelApplicants;
         }
 
 

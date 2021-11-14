@@ -53,21 +53,37 @@ namespace CarpoolingProject.Data.Migrations
                 nullable: false,
                 defaultValue: 0);
 
-            migrationBuilder.AddColumn<int>(
-                name: "TravelId1",
-                table: "Users",
-                type: "int",
-                nullable: true);
-
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Cities",
                 table: "Cities",
                 column: "CityId");
 
+            migrationBuilder.CreateTable(
+                name: "TravelApplication",
+                columns: table => new
+                {
+                    TravelId = table.Column<int>(type: "int", nullable: false),
+                    ApplicantId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TravelApplication", x => new { x.ApplicantId, x.TravelId });
+                    table.ForeignKey(
+                        name: "FK_TravelApplication_Travels_TravelId",
+                        column: x => x.TravelId,
+                        principalTable: "Travels",
+                        principalColumn: "TravelId");
+                    table.ForeignKey(
+                        name: "FK_TravelApplication_Users_ApplicantId",
+                        column: x => x.ApplicantId,
+                        principalTable: "Users",
+                        principalColumn: "UserId");
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_Users_TravelId1",
-                table: "Users",
-                column: "TravelId1");
+                name: "IX_TravelApplication_TravelId",
+                table: "TravelApplication",
+                column: "TravelId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Addresses_Cities_CityId",
@@ -82,14 +98,6 @@ namespace CarpoolingProject.Data.Migrations
                 column: "CountryId",
                 principalTable: "Countries",
                 principalColumn: "CountryId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Users_Travels_TravelId1",
-                table: "Users",
-                column: "TravelId1",
-                principalTable: "Travels",
-                principalColumn: "TravelId",
-                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -102,13 +110,8 @@ namespace CarpoolingProject.Data.Migrations
                 name: "FK_Cities_Countries_CountryId",
                 table: "Cities");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_Users_Travels_TravelId1",
-                table: "Users");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Users_TravelId1",
-                table: "Users");
+            migrationBuilder.DropTable(
+                name: "TravelApplication");
 
             migrationBuilder.DropPrimaryKey(
                 name: "PK_Cities",
@@ -124,10 +127,6 @@ namespace CarpoolingProject.Data.Migrations
 
             migrationBuilder.DropColumn(
                 name: "TravelCountAsDriver",
-                table: "Users");
-
-            migrationBuilder.DropColumn(
-                name: "TravelId1",
                 table: "Users");
 
             migrationBuilder.RenameTable(

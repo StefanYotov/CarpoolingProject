@@ -21,7 +21,8 @@ namespace CarpoolingProject.Data
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<City> Cities { get; set; }
-        
+        public virtual DbSet<TravelApplication> TravelApplications { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -58,6 +59,21 @@ namespace CarpoolingProject.Data
                 .HasOne(c => c.Country)
                 .WithMany(ci => ci.Cities)
                 .HasForeignKey(c => c.CountryId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<TravelApplication>()
+                .HasKey(t => new { t.ApplicantId, t.TravelId });
+           
+            modelBuilder.Entity<Travel>()
+                .HasMany(t => t.ApplicantsForTravel)
+                .WithOne(a => a.Travel)
+                .HasForeignKey(a => a.TravelId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.TravelApplicants)
+                .WithOne(a => a.Applicant)
+                .HasForeignKey(a => a.ApplicantId)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }
