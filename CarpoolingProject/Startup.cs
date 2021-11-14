@@ -43,7 +43,7 @@ namespace CarpoolingProject
             services.AddScoped<IDriverService, DriverService>();
             services.AddScoped<IUserService, UserService>();
 
-            //services.AddSwaggerGen();
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,11 +57,11 @@ namespace CarpoolingProject
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            //app.UseSwagger();
-            //app.UseSwaggerUI(c =>
-            //{
-            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Carpooling V1");
-            //});
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Carpooling V1");
+            });
             app.UseStaticFiles();
             app.UseSession();
 
