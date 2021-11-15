@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace CarpoolingProject.Models.RequestModels
 {
-    class DeleteUserRequestModel
+    public class DeleteUserRequestModel
     {
+        public int Id { get; set; }
     }
 }
