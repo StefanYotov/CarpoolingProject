@@ -23,6 +23,6 @@ namespace CarpoolingProject.Models.EntityModels
         [Required]
         public int FreeSpots { get; set; }
         public virtual ICollection<User> Passengers { get; set; } = new List<User>();
-        public ICollection<TravelApplication> ApplicantsForTravel { get; set; } = new List<TravelApplication>();
+        public virtual ICollection<TravelApplication> ApplicantsForTravel { get; set; } = new List<TravelApplication>();
     }
 }

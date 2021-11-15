@@ -15,7 +15,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
         private readonly CarpoolingContext context;
         private readonly ICityService cityService;
 
-        public CountryService(CarpoolingContext context,ICityService cityService)
+        public CountryService(CarpoolingContext context, ICityService cityService)
         {
             this.context = context;
             this.cityService = cityService;
@@ -34,7 +34,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
                 Name = requestModel.Name
             };
             responseModel.IsSuccess = true;
-            responseModel.Message = "City Successfully created";
+            responseModel.Message = Constants.CITY_CREATE_SUCCESS;
             this.context.Countries.Add(country);
             await this.context.SaveChangesAsync();
             return responseModel;
@@ -65,10 +65,12 @@ namespace CarpoolingProject.Services.ServiceImplementation
         {
             var response = new InfoResponseModel();
             var country = await GetCountry(requestModel.Id);
+
             var city = await cityService.GetCity(requestModel.CityId);
+
             country.Cities.Add(city);
             await context.SaveChangesAsync();
-            response.Message = "City added to Country";
+            response.Message = Constants.CITY_ADDED;
             response.IsSuccess = true;
             return response;
         }

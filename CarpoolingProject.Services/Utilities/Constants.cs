@@ -23,6 +23,14 @@ namespace CarpoolingProject.Services.Utilities
         public const string CITY_CREATE_SUCCESS = "City Successfully created";
         public const string CITY_DELETE_SUCCESSFULL = "City Successfully deleted";
         public const string CITY_NULL_ERROR = "City cannot be null";
-
+        public const string CITY_ADDED = "City added to Country";
+        public const string CITY_EXISTS = "City already exists";
+        public const string USER_WRONG_PARAMETERS = "Wrong Parameters";
+        public const string USER_CREATE_SUCCESS = "User created successfully";
+        public const string USER_NOT_FOUND = "User was not found";
+        public const string USER_DELETED = "User deleted successfully";
+        public const string USER_UPDATE_ERROR = "Couldn't find travel with ";
+        public const string USERNAME_ALREADY_EXIST = "Username is already exist";
+        public const string EMAIL_ALREADY_EXIST = "Email is already exist";
     }
 }
