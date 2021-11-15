@@ -26,9 +26,13 @@ namespace CarpoolingProject.Models.EntityModels
         public int TravelCountAsDriver { get; set; }
         public int StarsCount { get; set; }
         public int ReviewCount { get; set; }
-        public virtual ICollection<UserRole> Roles { get; set; } = new List<UserRole>();
-        public virtual ICollection<TravelApplication> TravelApplicants { get; set; } = new List<TravelApplication>();
-
+        public ICollection<UserRole> Roles { get; set; } = new List<UserRole>();
+        public ICollection<Travel> Travels { get; set; } = new List<Travel>();
+        public ICollection<TravelPassenger> PassengerForTravels { get; set; } = new List<TravelPassenger>();
+        public ICollection<Rating> CreatedRatings { get; set; } = new List<Rating>();
+        public ICollection<Rating> RatingsForUser { get; set; } = new List<Rating>();
+        public ICollection<TravelApplication> TravelApplications { get; set; } = new List<TravelApplication>();
+       
 
     }
 }

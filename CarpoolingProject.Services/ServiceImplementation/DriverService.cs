@@ -52,8 +52,8 @@ namespace CarpoolingProject.Services.ServiceImplementation
             var response = new InfoResponseModel();
             var selectedPassenger = await userService.GetUser(requestModel.Id);
             var travel = await travelService.GetTravel(requestModel.TravelId);
-            
-            if (selectedPassenger != null && travel!=null)
+
+            if (selectedPassenger != null && travel != null)
             {
                 var travelAplication = new TravelApplication
                 {
@@ -63,8 +63,8 @@ namespace CarpoolingProject.Services.ServiceImplementation
                 if (requestModel.Liked)
                 {
                     response.Message = $"You liked ";
-                    travel.Passengers.Add(selectedPassenger);
-                    
+                    travel.ApplicantsForTravel.Add(travelAplication);
+
                     travel.ApplicantsForTravel.Remove(travelAplication);
                     return response;
                 }
@@ -76,5 +76,6 @@ namespace CarpoolingProject.Services.ServiceImplementation
             response.IsSuccess = false;
             return response;
         }
+
     }
 }

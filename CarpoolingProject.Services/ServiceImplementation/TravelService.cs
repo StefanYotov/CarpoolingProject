@@ -27,8 +27,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
 
         public async Task<Travel> GetTravel(int id)
         {
-            var travel = await (context.Travels.Include(x=>x.ApplicantsForTravel)
-                .FirstOrDefaultAsync(x => x.TravelId == id));
+            var travel = await context.Travels.FirstOrDefaultAsync(x => x.TravelId == id);
             return travel ?? throw new EntityNotFoundException();
         }
         public async Task<IEnumerable<TravelDto>> GetAllTravelsAsync()
@@ -45,7 +44,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
         public async Task<InfoResponseModel> CreateTravelAsync(CreateTravelRequestModel requestModel)
         {
             var responseModel = new InfoResponseModel();
-            if (requestModel.UserId < 1 ||
+            if (requestModel.CreatorId < 1 ||
                 requestModel.StartPoint == null ||
                 requestModel.EndPoint == null ||
                 requestModel.FreeSpots < 1
@@ -57,7 +56,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
             }
             var travel = new Travel()
             {
-                UserId = requestModel.UserId,
+                CreatorId = requestModel.CreatorId,
                 StartPoint = requestModel.StartPoint,
                 EndPoint = requestModel.EndPoint,
                 DepartureTime = requestModel.DepartureTime,
@@ -93,16 +92,16 @@ namespace CarpoolingProject.Services.ServiceImplementation
         }
         private void ValidateDate(Travel travel)
         {
-            if (this.GetTravel(travel.UserId) == null)
+            if (this.GetTravel(travel.CreatorId) == null)
             {
-                throw new EntityNotFoundException($"There is no travel with id {travel.UserId} ");
+                throw new EntityNotFoundException($"There is no travel with id {travel.CreatorId} ");
             }
         }
 
         public async Task<InfoResponseModel> UpdateTravelAsync(UpdateTravelRequestModel requestModel)
         {
             var response = new InfoResponseModel();
-            if (requestModel.UserId < 1 ||
+            if (requestModel.CreatorId < 1 ||
                 requestModel.FreeSpots < 1 ||
                 requestModel.EndPoint == null ||
                 requestModel.StartPoint == null
@@ -112,12 +111,12 @@ namespace CarpoolingProject.Services.ServiceImplementation
                 response.Message = Constants.INVALID_PARAMS;
                 return response;
             }
-            var travel = await context.Travels.FirstOrDefaultAsync(x => x.TravelId == requestModel.Id);
+            var travel = await context.Travels.FirstOrDefaultAsync(x => x.TravelId == requestModel.TravelId);
             if (travel != null)
             {
-                if (requestModel.UserId != travel.UserId)
+                if (requestModel.CreatorId != travel.CreatorId)
                 {
-                    travel.UserId = requestModel.Id;
+                    travel.CreatorId = requestModel.CreatorId;
                 }
                 else if (requestModel.FreeSpots != travel.FreeSpots)
                 {
@@ -159,7 +158,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
             if (requestModel.IsFinished)
             {
                 response.Message = "Travel finished!";
-                travel.User.TravelCountAsDriver++;
+                travel.Creator.TravelCountAsDriver++;
                 context.Travels.Remove(travel);
                 return response;
             }
@@ -188,23 +187,24 @@ namespace CarpoolingProject.Services.ServiceImplementation
             response.Message = "Failed to add to list";
             return response;
         }
-        //Todo make async !!!!!!!!!!!!
+
         public async Task<IEnumerable<User>> ListApplicantsForTravel(GetTravelRequestModel requestModel)
         {
             var travel = await GetTravel(requestModel.TravelId);
             var applicantsIds = new List<int>();
-            foreach(var application in travel.ApplicantsForTravel)
+            foreach (var application in travel.ApplicantsForTravel)
             {
                 applicantsIds.Add(application.ApplicantId);
             }
 
             var travelApplicants = new List<User>();
-            foreach(var applicatntsId in applicantsIds)
+            foreach (var applicatntsId in applicantsIds)
             {
                 travelApplicants.Add(await userService.GetUser(applicatntsId));
             }
             return travelApplicants;
         }
+
 
 
     }

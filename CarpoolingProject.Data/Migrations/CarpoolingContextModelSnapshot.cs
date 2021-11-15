@@ -51,9 +51,7 @@ namespace CarpoolingProject.Data.Migrations
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.City", b =>
                 {
                     b.Property<int>("CityId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<int>("CountryId")
                         .HasColumnType("int");
@@ -63,8 +61,6 @@ namespace CarpoolingProject.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CityId");
-
-                    b.HasIndex("CountryId");
 
                     b.ToTable("Cities");
 
@@ -98,6 +94,43 @@ namespace CarpoolingProject.Data.Migrations
                             CountryId = 1,
                             Name = "Bulgaria"
                         });
+                });
+
+            modelBuilder.Entity("CarpoolingProject.Models.EntityModels.Rating", b =>
+                {
+                    b.Property<int>("RatingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsChanged")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("RatedUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StarsCount")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("RatingId");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("RatedUserId");
+
+                    b.ToTable("Rating");
                 });
 
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.Role", b =>
@@ -145,26 +178,28 @@ namespace CarpoolingProject.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CreatorId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DepartureTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("EndPoint")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("EndPointId")
+                        .HasColumnType("int");
 
                     b.Property<int>("FreeSpots")
                         .HasColumnType("int");
 
-                    b.Property<string>("StartPoint")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
+                    b.Property<int>("StartPointId")
                         .HasColumnType("int");
 
                     b.HasKey("TravelId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("EndPointId");
+
+                    b.HasIndex("StartPointId");
 
                     b.ToTable("Travels");
 
@@ -172,29 +207,29 @@ namespace CarpoolingProject.Data.Migrations
                         new
                         {
                             TravelId = 1,
+                            CreatorId = 1,
                             DepartureTime = new DateTime(2021, 11, 15, 22, 50, 0, 0, DateTimeKind.Unspecified),
-                            EndPoint = "Selo Sofia",
+                            EndPointId = 1,
                             FreeSpots = 4,
-                            StartPoint = "velcho atanasov 55",
-                            UserId = 1
+                            StartPointId = 1
                         },
                         new
                         {
                             TravelId = 2,
+                            CreatorId = 2,
                             DepartureTime = new DateTime(2021, 11, 15, 22, 50, 0, 0, DateTimeKind.Unspecified),
-                            EndPoint = "Selo Sofia",
+                            EndPointId = 1,
                             FreeSpots = 2,
-                            StartPoint = "velcho atanasov 55",
-                            UserId = 2
+                            StartPointId = 1
                         },
                         new
                         {
                             TravelId = 3,
+                            CreatorId = 3,
                             DepartureTime = new DateTime(2021, 11, 15, 22, 50, 0, 0, DateTimeKind.Unspecified),
-                            EndPoint = "Selo Sofia",
+                            EndPointId = 1,
                             FreeSpots = 3,
-                            StartPoint = "velcho atanasov 55",
-                            UserId = 3
+                            StartPointId = 1
                         });
                 });
 
@@ -211,6 +246,21 @@ namespace CarpoolingProject.Data.Migrations
                     b.HasIndex("TravelId");
 
                     b.ToTable("TravelApplications");
+                });
+
+            modelBuilder.Entity("CarpoolingProject.Models.EntityModels.TravelPassenger", b =>
+                {
+                    b.Property<int>("PassengerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TravelId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PassengerId", "TravelId");
+
+                    b.HasIndex("TravelId");
+
+                    b.ToTable("TravelPassengers");
                 });
 
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.User", b =>
@@ -250,17 +300,12 @@ namespace CarpoolingProject.Data.Migrations
                     b.Property<int>("TravelCountAsDriver")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TravelId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("UserId");
-
-                    b.HasIndex("TravelId");
 
                     b.ToTable("Users");
 
@@ -353,28 +398,63 @@ namespace CarpoolingProject.Data.Migrations
                 {
                     b.HasOne("CarpoolingProject.Models.EntityModels.Country", "Country")
                         .WithMany("Cities")
-                        .HasForeignKey("CountryId")
+                        .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Country");
                 });
 
+            modelBuilder.Entity("CarpoolingProject.Models.EntityModels.Rating", b =>
+                {
+                    b.HasOne("CarpoolingProject.Models.EntityModels.User", "Author")
+                        .WithMany("CreatedRatings")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("CarpoolingProject.Models.EntityModels.User", "RatedUser")
+                        .WithMany("RatingsForUser")
+                        .HasForeignKey("RatedUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("RatedUser");
+                });
+
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.Travel", b =>
                 {
-                    b.HasOne("CarpoolingProject.Models.EntityModels.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                    b.HasOne("CarpoolingProject.Models.EntityModels.User", "Creator")
+                        .WithMany("Travels")
+                        .HasForeignKey("CreatorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.HasOne("CarpoolingProject.Models.EntityModels.Address", "EndPoint")
+                        .WithMany("TravelsWithEndingPoint")
+                        .HasForeignKey("EndPointId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("CarpoolingProject.Models.EntityModels.Address", "StartPoint")
+                        .WithMany("TravelsWithStartingPoint")
+                        .HasForeignKey("StartPointId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("EndPoint");
+
+                    b.Navigation("StartPoint");
                 });
 
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.TravelApplication", b =>
                 {
                     b.HasOne("CarpoolingProject.Models.EntityModels.User", "Applicant")
-                        .WithMany("TravelApplicants")
+                        .WithMany("TravelApplications")
                         .HasForeignKey("ApplicantId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -390,11 +470,23 @@ namespace CarpoolingProject.Data.Migrations
                     b.Navigation("Travel");
                 });
 
-            modelBuilder.Entity("CarpoolingProject.Models.EntityModels.User", b =>
+            modelBuilder.Entity("CarpoolingProject.Models.EntityModels.TravelPassenger", b =>
                 {
-                    b.HasOne("CarpoolingProject.Models.EntityModels.Travel", null)
+                    b.HasOne("CarpoolingProject.Models.EntityModels.User", "Passenger")
+                        .WithMany("PassengerForTravels")
+                        .HasForeignKey("PassengerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("CarpoolingProject.Models.EntityModels.Travel", "Travel")
                         .WithMany("Passengers")
-                        .HasForeignKey("TravelId");
+                        .HasForeignKey("TravelId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Passenger");
+
+                    b.Navigation("Travel");
                 });
 
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.UserRole", b =>
@@ -414,6 +506,13 @@ namespace CarpoolingProject.Data.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CarpoolingProject.Models.EntityModels.Address", b =>
+                {
+                    b.Navigation("TravelsWithEndingPoint");
+
+                    b.Navigation("TravelsWithStartingPoint");
                 });
 
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.City", b =>
@@ -440,9 +539,17 @@ namespace CarpoolingProject.Data.Migrations
 
             modelBuilder.Entity("CarpoolingProject.Models.EntityModels.User", b =>
                 {
+                    b.Navigation("CreatedRatings");
+
+                    b.Navigation("PassengerForTravels");
+
+                    b.Navigation("RatingsForUser");
+
                     b.Navigation("Roles");
 
-                    b.Navigation("TravelApplicants");
+                    b.Navigation("TravelApplications");
+
+                    b.Navigation("Travels");
                 });
 #pragma warning restore 612, 618
         }

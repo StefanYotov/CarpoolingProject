@@ -12,17 +12,19 @@ namespace CarpoolingProject.Models.EntityModels
     {
         [Key]
         public int TravelId { get; set; }
-        public int UserId { get; set; }
-        public User User { get; set; }
+        public int CreatorId { get; set; }
+        public User Creator { get; set; }
         [Required]
-        public string StartPoint { get; set; }
+        public Address StartPoint { get; set; }
+        public int StartPointId { get; set; }
         [Required]
-        public string EndPoint { get; set; }
+        public Address EndPoint { get; set; }
+        public int EndPointId { get; set; }
         [Required]
         public DateTime DepartureTime { get; set; }
         [Required]
         public int FreeSpots { get; set; }
-        public virtual ICollection<User> Passengers { get; set; } = new List<User>();
-        public virtual ICollection<TravelApplication> ApplicantsForTravel { get; set; } = new List<TravelApplication>();
+        public virtual ICollection<TravelPassenger> Passengers { get; set; } = new List<TravelPassenger>();
+        public ICollection<TravelApplication> ApplicantsForTravel { get; set; }
     }
 }

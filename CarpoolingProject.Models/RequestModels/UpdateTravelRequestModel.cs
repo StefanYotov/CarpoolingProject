@@ -8,6 +8,6 @@ namespace CarpoolingProject.Models.RequestModels
 {
     public class UpdateTravelRequestModel:CreateTravelRequestModel
     {
-        public int Id { get; set; }
+        public int TravelId { get; set; }
     }
 }

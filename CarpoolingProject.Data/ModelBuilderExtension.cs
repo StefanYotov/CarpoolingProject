@@ -12,6 +12,32 @@ namespace CarpoolingProject.Data
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
+            var addresses = new List<Address>
+            {
+                new Address
+                {
+                    AddressId=1,
+                    StreetName="ulica selo",
+                    CityId=1
+                }
+            };
+            var cities = new List<City>
+            {
+                new City
+                {
+                    CityId=1,
+                    Name="Varna",
+                    CountryId=1
+                }
+            };
+            var countries = new List<Country>
+            {
+                new Country
+                {
+                    CountryId=1,
+                    Name="Bulgaria"
+                }
+            };
             var users = new List<User>
             {
                 new User
@@ -62,27 +88,27 @@ namespace CarpoolingProject.Data
                 new Travel
                 {
                     TravelId=1,
-                    UserId=1,
-                    StartPoint="velcho atanasov 55",
-                    EndPoint ="Selo Sofia",
+                    CreatorId=1,
+                    StartPointId=1,
+                    EndPointId=1,
                     DepartureTime= new DateTime(2021, 11, 15, 22, 50,00),
                     FreeSpots= 4
                 },
                 new Travel
                 {
                     TravelId=2,
-                    UserId=2,
-                    StartPoint="velcho atanasov 55",
-                    EndPoint ="Selo Sofia",
+                    CreatorId=2,
+                   StartPointId=1,
+                    EndPointId=1,
                     DepartureTime= new DateTime(2021, 11, 15, 22, 50,00),
                     FreeSpots= 2
                 },
                 new Travel
                 {
                     TravelId=3,
-                    UserId=3,
-                    StartPoint="velcho atanasov 55",
-                    EndPoint ="Selo Sofia",
+                    CreatorId=3,
+                    StartPointId=1,
+                    EndPointId=1,
                     DepartureTime= new DateTime(2021, 11, 15, 22, 50,00),
                     FreeSpots= 3
                 }
@@ -126,32 +152,7 @@ namespace CarpoolingProject.Data
                     UserId=2
                 }
             };
-            var addresses = new List<Address>
-            {
-                new Address
-                {
-                    AddressId=1,
-                    StreetName="ulica selo",
-                    CityId=1
-                }
-            };
-            var cities = new List<City>
-            {
-                new City
-                {
-                    CityId=1,
-                    Name="Varna",
-                    CountryId=1
-                }
-            };
-            var countries = new List<Country>
-            {
-                new Country
-                {
-                    CountryId=1,
-                    Name="Bulgaria"
-                }
-            };
+
             modelBuilder.Entity<User>().HasData(users);
             modelBuilder.Entity<Travel>().HasData(travels);
             modelBuilder.Entity<Role>().HasData(roles);
