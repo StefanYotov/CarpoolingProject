@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 namespace CarpoolingProject.Models.EntityModels
 {
@@ -9,5 +10,7 @@ namespace CarpoolingProject.Models.EntityModels
         public string StreetName { get; set; }
         public int CityId { get; set; }
         public City City { get; set; }
+        public virtual ICollection<Travel> TravelsWithStartingPoint { get; set; }
+        public virtual ICollection<Travel> TravelsWithEndingPoint { get; set; }
     }
 }

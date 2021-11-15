@@ -22,59 +22,13 @@ namespace CarpoolingProject.Data
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<TravelApplication> TravelApplications { get; set; }
+        public virtual DbSet<TravelPassenger> TravelPassengers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
             modelBuilder.Seed();
-
-            modelBuilder.Entity<UserRole>()
-                .HasKey(ur => new { ur.UserId, ur.RoleId });
-
-            modelBuilder.Entity<UserRole>()
-                .HasOne(ur => ur.User)
-                .WithMany(ur => ur.Roles)
-                .HasForeignKey(ur => ur.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<UserRole>()
-                .HasOne(ur => ur.Role)
-                .WithMany(ur => ur.Users)
-                .HasForeignKey(ur => ur.RoleId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<Address>()
-                .HasOne(a => a.City)
-                .WithMany(c => c.Addresses)
-                .HasForeignKey(a => a.CityId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<Country>()
-                .HasMany(c => c.Cities)
-                .WithOne(ci => ci.Country)
-                .HasForeignKey(c => c.CityId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<City>()
-                .HasOne(c => c.Country)
-                .WithMany(ci => ci.Cities)
-                .HasForeignKey(c => c.CountryId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<TravelApplication>()
-                .HasKey(t => new { t.ApplicantId, t.TravelId });
-           
-            modelBuilder.Entity<Travel>()
-                .HasMany(t => t.ApplicantsForTravel)
-                .WithOne(a => a.Travel)
-                .HasForeignKey(a => a.TravelId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<User>()
-                .HasMany(u => u.TravelApplicants)
-                .WithOne(a => a.Applicant)
-                .HasForeignKey(a => a.ApplicantId)
-                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

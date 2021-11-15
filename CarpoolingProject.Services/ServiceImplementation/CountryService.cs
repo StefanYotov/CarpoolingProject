@@ -22,7 +22,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
         }
         public async Task<Country> GetCountry(int id)
         {
-            var country = await this.context.Countries.FirstOrDefaultAsync(c => c.CountryId == id);
+            var country = await context.Countries.FirstOrDefaultAsync(x => x.CountryId == id);
             return country;
         }
         public async Task<InfoResponseModel> CreateCountryAsync(CreateCountryRequestModel requestModel)
@@ -42,24 +42,24 @@ namespace CarpoolingProject.Services.ServiceImplementation
 
         public async Task<InfoResponseModel> DeleteCountryAsync(DeleteCountryRequestModel requestModel)
         {
-            var response = new InfoResponseModel();
-            var country = await GetCountry(requestModel.Id);
+            var responseModel = new InfoResponseModel();
+            var country = await this.context.Countries.FirstOrDefaultAsync(c => c.CountryId == requestModel.Id);
 
             if (country == null)
             {
-                response.Message = Constants.COUNTRY_NULL_ERROR;
-                response.IsSuccess = false;
+                responseModel.Message = Constants.COUNTRY_NULL_ERROR;
+                responseModel.IsSuccess = false;
             }
 
             else
             {
-                response.Message = Constants.COUNTRY_DELETE_SUCCESSFULL;
-                response.IsSuccess = true;
+                responseModel.Message = Constants.COUNTRY_DELETE_SUCCESSFULL;
+                responseModel.IsSuccess = true;
                 this.context.Countries.Remove(country);
                 await this.context.SaveChangesAsync();
 
             }
-            return response;
+            return responseModel;
         }
         public async Task<InfoResponseModel> AddCitiesToCountryAsync(AddCitiesToCountryRequestModel requestModel)
         {
@@ -77,5 +77,6 @@ namespace CarpoolingProject.Services.ServiceImplementation
             var country = await GetCountry(requestModel.Id);
             return country.Cities;
         }
+
     }
 }

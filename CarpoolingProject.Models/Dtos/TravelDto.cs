@@ -13,8 +13,8 @@ namespace CarpoolingProject.Services.Dtos
             this.FreeSeats = travel.FreeSpots;
         }
         
-        public string StartPoint { get; set; }
-        public string EndPoint { get; set; }
+        public Address StartPoint { get; set; }
+        public Address EndPoint { get; set; }
         public DateTime DepartureTime { get; set; }
         public int FreeSeats { get; set; }
     }
