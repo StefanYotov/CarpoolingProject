@@ -29,12 +29,13 @@ namespace CarpoolingProject.Services.ServiceImplementation
         public async Task<InfoResponseModel> CreateCityAsync(CreateCityRequestModel requestModel)
         {
             var response = new InfoResponseModel();
+
             if (context.Cities.Any(x => x.Name == requestModel.Name))
             {
-                response.Message = "City already exists";
+                response.Message = Constants.CITY_EXISTS;
                 return response;
             }
-            
+
 
             var city = new City()
             {
@@ -70,4 +71,3 @@ namespace CarpoolingProject.Services.ServiceImplementation
         }
     }
 }
-  
