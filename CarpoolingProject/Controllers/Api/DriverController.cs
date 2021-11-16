@@ -11,7 +11,7 @@ namespace CarpoolingProject.Web.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DriverController : ControllerBase
+    public class DriverController : Controller
     {
         private readonly IDriverService driverService;
 
