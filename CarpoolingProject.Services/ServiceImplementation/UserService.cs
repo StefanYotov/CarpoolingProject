@@ -126,7 +126,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
                 return responseModel;
             }
             var user = await GetUser(requestModel.Id);
-            //var user = await context.Users.FirstOrDefaultAsync(u => u.UserId == requestModel.Id);
+
             if (user != null)
             {
                 if (requestModel.UserName != user.UserName)
