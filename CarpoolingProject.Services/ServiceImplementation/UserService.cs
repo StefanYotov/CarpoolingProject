@@ -59,7 +59,10 @@ namespace CarpoolingProject.Services.ServiceImplementation
                 FirstName = requestModel.FirstName,
                 LastName = requestModel.LastName,
                 Email = requestModel.Email,
-                PhoneNumber = requestModel.PhoneNumber
+                PhoneNumber = requestModel.PhoneNumber,
+                StarsCount = 0,
+                TravelCountAsDriver = 0,
+                ReviewCount = 0
             };
 
             if (await context.Users.AnyAsync(x => x.UserName == requestModel.UserName))
@@ -123,7 +126,7 @@ namespace CarpoolingProject.Services.ServiceImplementation
                 return responseModel;
             }
             var user = await GetUser(requestModel.Id);
-
+            //var user = await context.Users.FirstOrDefaultAsync(u => u.UserId == requestModel.Id);
             if (user != null)
             {
                 if (requestModel.UserName != user.UserName)

@@ -10,7 +10,7 @@ namespace CarpoolingProject.Web.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CityController : Controller
+    public class CityController : ControllerBase
     {
         private readonly ICityService cityService;
 

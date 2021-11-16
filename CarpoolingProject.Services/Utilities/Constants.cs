@@ -29,7 +29,7 @@ namespace CarpoolingProject.Services.Utilities
         public const string USER_CREATE_SUCCESS = "User created successfully";
         public const string USER_NOT_FOUND = "User was not found";
         public const string USER_DELETED = "User deleted successfully";
-        public const string USER_UPDATE_ERROR = "Couldn't find travel with ";
+        public const string USER_UPDATE_ERROR = "Couldn't find user with ";
         public const string USERNAME_ALREADY_EXIST = "Username is already exist";
         public const string EMAIL_ALREADY_EXIST = "Email is already exist";
     }
